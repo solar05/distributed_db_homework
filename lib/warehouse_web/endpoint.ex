@@ -7,7 +7,7 @@ defmodule WarehouseWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_warehouse_key",
-    signing_salt: "btUpuzIm"
+    signing_salt: "fiRWOIX2"
   ]
 
   socket "/socket", WarehouseWeb.UserSocket,

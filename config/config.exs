@@ -13,10 +13,10 @@ config :warehouse,
 # Configures the endpoint
 config :warehouse, WarehouseWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "ojMBbRmYw20Mnq5oPVZQD42ItsB73oL6YcPbLbbttVm2296OzKzOWvRYmpOGGAZf",
+  secret_key_base: "tLkxmvVJHYDO/6LOmC2u8rKsPyvtgKrDJbNUBNxyu9HPmxpCbbTKNbW5/WFm2kCp",
   render_errors: [view: WarehouseWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Warehouse.PubSub,
-  live_view: [signing_salt: "TK7F5UYG"]
+  live_view: [signing_salt: "mbsvdEMH"]
 
 # Configures Elixir's Logger
 config :logger, :console,
