@@ -12,6 +12,10 @@
 
 (def size-map ["XS" "S" "M" "L" "XL" "XXL" "XXXL" "4XL"])
 
+(def position-map [["admin" 50000] ["operator" 45000]
+                   ["seller" 40000] ["consultant" 35000]
+                   ["manager" 42000]])
+
 (defn gender-gen []
   (gen/generate (gen/elements ["F" "M"])))
 
@@ -42,9 +46,20 @@
   (let [vals [(type-gen) (article-gen) (mark-gen) (material-gen) (price-gen) (gender-gen)]]
     (str "(" (s/join ", " vals) ")")))
 
+(defn prepare-clothe-example-val []
+  (let [vals [(gen/generate (gen/choose 1 8))
+              (gen/generate (gen/choose 1 8))
+              (gen/generate (gen/choose 1 20))]]
+    (str "(" (s/join ", " vals) ")")))
+
 (defn clothe-handbook-gen []
   (str "INSERT INTO clothe_handbook (type, article, mark, material, price, gender) VALUES "
        (s/join ", " (repeatedly 20 prepare-handbook-val)) ";"))
+
+(defn clothe-color-gen []
+  (str "INSERT INTO clothe_colour (colour) VALUES"
+       (apply str
+              (drop-last 2 (s/join "" (map #(str " ('" % "'), ") colour-map)))) ";"))
 
 (defn clothe-color-gen []
   (str "INSERT INTO clothe_colour (colour) VALUES"
@@ -56,8 +71,24 @@
        (apply str
               (drop-last 2 (s/join "" (map #(str " ('" % "'), ") size-map)))) ";"))
 
+(defn clothe-example-gen []
+  (str "INSERT INTO clothe_example (size_id, colour_id, handbook_id) VALUES "
+       (s/join ", " (repeatedly 30 prepare-clothe-example-val)) ";"))
+
+(defn employee-position-gen []
+  (str "INSERT INTO employee-position (position-name position-salary) VALUES "
+       (s/join ", " (map
+                     (fn [elem] (str "(" (first elem) ", " (last elem) ")"))
+                     position-map)) ";"))
+
 (defn -main [& args]
   (let [clothe-color (clothe-color-gen)
         clothe-size (clothe-size-gen)
-        clothe-handbook (clothe-handbook-gen)]
-    (spit filename (s/join "\n" [clothe-color clothe-size clothe-handbook]))))
+        clothe-handbook (clothe-handbook-gen)
+        clothe-examples (clothe-example-gen)
+        employee-position (employee-position-gen)]
+    (spit filename (s/join "\n" [clothe-color
+                                 clothe-size
+                                 clothe-handbook
+                                 clothe-examples
+                                 employee-position]))))
