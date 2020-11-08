@@ -12,6 +12,40 @@
 
 (def size-map ["XS" "S" "M" "L" "XL" "XXL" "XXXL" "4XL"])
 
+(defn gender-gen []
+  (gen/generate (gen/elements ["F" "M"])))
+
+(defn mark-gen []
+  (gen/generate (gen/elements ["Gucci" "Versace" "Burberry" "Louis Vuitton"
+                               "Prada" "D&G" "Chanel" "Giorgio Armani"])))
+
+(defn price-gen []
+  (gen/generate (gen/choose 500 7000)))
+
+(defn material-gen []
+  (gen/generate (gen/elements ["cotton" "flax" "whool" "ramie" "silk" "leather" "fur"])))
+
+(defn type-gen []
+  (gen/generate (gen/elements ["t-shirt" "skirt" "jeans" "socks"
+                               "gloves" "hat" "coat" "shirt" "shorts"])))
+
+(defn article-gen []
+  (let [zero-part (gender-gen)
+        first-part (gen/generate gen/char-alpha)
+        second-part (gen/generate (gen/choose 1111 9999))
+        third-part (gen/generate gen/char-alpha)
+        four-part (gen/generate (gen/choose 1 100))
+        last-part (gen/generate gen/char-alpha)]
+    (str zero-part first-part second-part third-part four-part last-part)))
+
+(defn prepare-handbook-val []
+  (let [vals [(type-gen) (article-gen) (mark-gen) (material-gen) (price-gen) (gender-gen)]]
+    (str "(" (s/join ", " vals) ")")))
+
+(defn clothe-handbook-gen []
+  (str "INSERT INTO clothe_handbook (type, article, mark, material, price, gender) VALUES "
+       (s/join ", " (repeatedly 20 prepare-handbook-val)) ";"))
+
 (defn clothe-color-gen []
   (str "INSERT INTO clothe_colour (colour) VALUES"
        (apply str
@@ -24,5 +58,6 @@
 
 (defn -main [& args]
   (let [clothe-color (clothe-color-gen)
-        clothe-size (clothe-size-gen)]
-    (spit filename (s/join "\n" [clothe-color clothe-size]))))
+        clothe-size (clothe-size-gen)
+        clothe-handbook (clothe-handbook-gen)]
+    (spit filename (s/join "\n" [clothe-color clothe-size clothe-handbook]))))
