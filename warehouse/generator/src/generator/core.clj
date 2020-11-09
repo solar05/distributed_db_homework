@@ -3,6 +3,7 @@
    [clojure.test.check.generators :as gen]
    [clojure.string :as s]
    [faker.generate :as fg]
+   [faker.name :as nm]
    [faker.address :as fk]))
 
 (def tables ["clothe_colour" "clothe_size"])
@@ -37,7 +38,26 @@
 
 (defn type-gen []
   (gen/generate (gen/elements ["'t-shirt'" "'skirt'" "'jeans'" "'socks'"
-                              "'gloves'" "'hat'" "'coat'" "'shirt'" "'shorts'"])))
+                               "'gloves'" "'hat'" "'coat'" "'shirt'" "'shorts'"])))
+
+(defn prepare-date [number]
+  (if (< number 10) (str "0" number) number))
+
+(defn birth-date-gen []
+  (str-util (s/join "-" [(gen/generate (gen/choose 1980 2000))
+                         (prepare-date (gen/generate (gen/choose 1 12)))
+                         (prepare-date (gen/generate (gen/choose 1 30)))])))
+
+(defn hire-date-gen []
+  (str-util (s/join "-" [(gen/generate (gen/choose 2015 2020))
+                         (prepare-date (gen/generate (gen/choose 1 12)))
+                         (prepare-date (gen/generate (gen/choose 1 30)))])))
+
+(defn phone-number-gen []
+  (str-util (str "+7-" (s/join "-" [(gen/generate (gen/choose 100 999))
+                                   (gen/generate (gen/choose 100 999))
+                                   (gen/generate (gen/choose 10 99))
+                                   (gen/generate (gen/choose 10 99))]))))
 
 (defn article-gen []
   (let [zero-part (gen/generate (gen/elements ["F" "M"]))
@@ -73,6 +93,17 @@
   (let [vals [(gen/generate (gen/choose 1 30))
               (gen/generate (gen/choose 1 5))
               (gen/generate (gen/choose 10 30))]]
+    (str "(" (s/join ", " vals) ")")))
+
+(defn prepare-employee-val []
+  (let [vals [(gen/generate (gen/choose 1 5))
+              (gen/generate (gen/choose 1 5))
+              (str-util (nm/first-name))
+              (str-util (nm/last-name))
+              (birth-date-gen)
+              (hire-date-gen)
+              (gen/generate (gen/choose 1000000000 9999999999))
+              (phone-number-gen)]]
     (str "(" (s/join ", " vals) ")")))
 
 (defn clothe-handbook-gen []
@@ -112,6 +143,10 @@
   (str "INSERT INTO clothe_in_store (clothe_id, magazine_id, quantity) VALUES "
        (s/join ", " (repeatedly 30 prepare-clothe-in-mag-val)) ";"))
 
+(defn employee-gen []
+  (str "INSERT INTO employee (magazine_id, position_id, first_name, last_name, birth_date, hire_date, passport_number, phone_number) VALUES "
+       (s/join ", " (repeatedly 20 prepare-employee-val)) ";"))
+
 (defn -main [& args]
   (let [clothe-color (clothe-color-gen)
         clothe-size (clothe-size-gen)
@@ -119,12 +154,13 @@
         clothe-examples (clothe-example-gen)
         employee-position (employee-position-gen)
         magazines (magazine-gen)
-        clothe-in-mag (clothe-in-mag-gen)]
+        clothe-in-mag (clothe-in-mag-gen)
+        employee (employee-gen)]
     (spit filename (s/join "\n" [clothe-color
                                  clothe-size
                                  clothe-handbook
                                  clothe-examples
                                  employee-position
                                  magazines
-                                 clothe-in-mag]))))
-
+                                 clothe-in-mag
+                                 employee]))))
