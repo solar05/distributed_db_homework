@@ -76,9 +76,9 @@
        (s/join ", " (repeatedly 30 prepare-clothe-example-val)) ";"))
 
 (defn employee-position-gen []
-  (str "INSERT INTO employee-position (position-name position-salary) VALUES "
+  (str "INSERT INTO employee-position (position-name, position-salary) VALUES "
        (s/join ", " (map
-                     (fn [elem] (str "(" (first elem) ", " (last elem) ")"))
+                     (fn [elem] (str "('" (first elem) "', " (last elem) ")"))
                      position-map)) ";"))
 
 (defn -main [& args]
