@@ -69,6 +69,12 @@
               ]]
     (str "(" (s/join ", " vals) ")")))
 
+(defn prepare-clothe-in-mag-val []
+  (let [vals [(gen/generate (gen/choose 1 30))
+              (gen/generate (gen/choose 1 5))
+              (gen/generate (gen/choose 10 30))]]
+    (str "(" (s/join ", " vals) ")")))
+
 (defn clothe-handbook-gen []
   (str "INSERT INTO clothe_handbook (type, article, mark, material, price, gender) VALUES "
        (s/join ", " (repeatedly 20 prepare-handbook-val)) ";"))
@@ -93,7 +99,7 @@
        (s/join ", " (repeatedly 30 prepare-clothe-example-val)) ";"))
 
 (defn employee-position-gen []
-  (str "INSERT INTO employee-position (position-name, position-salary) VALUES "
+  (str "INSERT INTO employee_position (position-name, position-salary) VALUES "
        (s/join ", " (map
                      (fn [elem] (str "(" (first elem) ", " (last elem) ")"))
                      position-map)) ";"))
@@ -102,16 +108,23 @@
   (str "INSERT INTO magazine (city, street, house, inn) VALUES "
        (s/join ", " (repeatedly 5 prepare-magazine-example-val)) ";"))
 
+(defn clothe-in-mag-gen []
+  (str "INSERT INTO clothe_in_store (clothe_id, magazine_id, quantity) VALUES "
+       (s/join ", " (repeatedly 30 prepare-clothe-in-mag-val)) ";"))
+
 (defn -main [& args]
   (let [clothe-color (clothe-color-gen)
         clothe-size (clothe-size-gen)
         clothe-handbook (clothe-handbook-gen)
         clothe-examples (clothe-example-gen)
         employee-position (employee-position-gen)
-        magazines (magazine-gen)]
+        magazines (magazine-gen)
+        clothe-in-mag (clothe-in-mag-gen)]
     (spit filename (s/join "\n" [clothe-color
                                  clothe-size
                                  clothe-handbook
                                  clothe-examples
                                  employee-position
-                                 magazines]))))
+                                 magazines
+                                 clothe-in-mag]))))
+
