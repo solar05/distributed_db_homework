@@ -1,7 +1,9 @@
 (ns generator.core
   (:require
    [clojure.test.check.generators :as gen]
-   [clojure.string :as s]))
+   [clojure.string :as s]
+   [faker.generate :as fg]
+   [faker.address :as fk]))
 
 (def tables ["clothe_colour" "clothe_size"])
 
@@ -15,6 +17,9 @@
 (def position-map [["'admin'" 50000] ["'operator'" 45000]
                    ["'seller'" 40000] ["'consultant'" 35000]
                    ["'manager'" 42000]])
+
+(defn str-util [word]
+  (str "'" word "'"))
 
 (defn gender-gen []
   (gen/generate (gen/elements ["'F'" "'M'"])))
@@ -53,11 +58,22 @@
               (gen/generate (gen/choose 1 20))]]
     (str "(" (s/join ", " vals) ")")))
 
+(defn prepare-magazine-example-val []
+  (let [vals [(str-util (fk/city))
+              (str-util (s/join "_"(fg/words {:n 5})))
+              (gen/generate (gen/choose 1 20))
+              (gen/generate (gen/elements [(gen/generate
+                                            (gen/choose 1000000000 9999999999))
+                                           (gen/generate
+                                            (gen/choose 100000000000 999999999999))]))
+              ]]
+    (str "(" (s/join ", " vals) ")")))
+
 (defn clothe-handbook-gen []
   (str "INSERT INTO clothe_handbook (type, article, mark, material, price, gender) VALUES "
        (s/join ", " (repeatedly 20 prepare-handbook-val)) ";"))
 
-(defn clothe-color-gen []
+(defn clothe-colour-gen []
   (str "INSERT INTO clothe_colour (colour) VALUES"
        (apply str
               (drop-last 2 (s/join "" (map #(str " (" % "), ") colour-map)))) ";"))
@@ -82,14 +98,20 @@
                      (fn [elem] (str "(" (first elem) ", " (last elem) ")"))
                      position-map)) ";"))
 
+(defn magazine-gen []
+  (str "INSERT INTO magazine (city, street, house, inn) VALUES "
+       (s/join ", " (repeatedly 5 prepare-magazine-example-val)) ";"))
+
 (defn -main [& args]
   (let [clothe-color (clothe-color-gen)
         clothe-size (clothe-size-gen)
         clothe-handbook (clothe-handbook-gen)
         clothe-examples (clothe-example-gen)
-        employee-position (employee-position-gen)]
+        employee-position (employee-position-gen)
+        magazines (magazine-gen)]
     (spit filename (s/join "\n" [clothe-color
                                  clothe-size
                                  clothe-handbook
                                  clothe-examples
-                                 employee-position]))))
+                                 employee-position
+                                 magazines]))))
