@@ -7,6 +7,7 @@
                  [org.clojure/test.check "0.10.0"]
                  [helpshift/faker "0.2.0"]
                  [faker "0.2.2"]]
+  :plugins [[lein-cljfmt "0.7.0"]]
   :main ^:skip-aot generator.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
