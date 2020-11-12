@@ -19,7 +19,8 @@
    :magazine ["city" "street" "house" "inn"]
    :clothe_in_store ["clothe_id" "magazine_id" "quantity"]
    :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number"]
-   :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]})
+   :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]
+   :clothe_sold ["sales_recepeit_id" "clothe_in_store_id" "quantity"]})
 
 (def position-map [["admin" 50000] ["operator" 45000]
                    ["seller" 40000] ["consultant" 35000]
@@ -124,6 +125,13 @@
               (gen/generate (gen/choose 10 99))]]
     (str "(" (s/join ", " vals) ")")))
 
+(defn clothe-sold-val []
+  (let [vals [(gen/generate (gen/choose 1 50))
+              (gen/generate (gen/choose 1 30))
+              (gen/generate (gen/choose 1 3))
+              ]]
+    (str "(" (s/join ", " vals) ")")))
+
 (defn simple-gen [table row data]
   (str "INSERT INTO " table
        " (" row ") VALUES"
@@ -152,7 +160,8 @@
         magazines (complex-gen "magazine" (:magazine tables-fileds) 5 magazine-example-val)
         clothe-in-mag (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 clothe-in-mag-val)
         employee (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
-        sales (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)]
+        sales (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)
+        sold-clothe (complex-gen "clothe_sold_list" (:clothe_sold tables-fileds) 30 clothe-sold-val)]
     (spit filename (s/join "\n" [clothe-color
                                  clothe-size
                                  clothe-handbook
@@ -161,4 +170,5 @@
                                  magazines
                                  clothe-in-mag
                                  employee
-                                 sales]))))
+                                 sales
+                                 sold-clothe]))))
