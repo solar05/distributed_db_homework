@@ -18,7 +18,8 @@
    :clothe_example ["size_id" "colour_id" "handbook_id"]
    :magazine ["city" "street" "house" "inn"]
    :clothe_in_store ["clothe_id" "magazine_id" "quantity"]
-   :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number"]})
+   :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number"]
+   :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]})
 
 (def position-map [["admin" 50000] ["operator" 45000]
                    ["seller" 40000] ["consultant" 35000]
@@ -58,6 +59,11 @@
                          (prepare-date (gen/generate (gen/choose 1 12)))
                          (prepare-date (gen/generate (gen/choose 1 30)))])))
 
+(defn sold-date-gen []
+  (str-util (s/join "-" [(gen/generate (gen/choose 2019 2020))
+                         (prepare-date (gen/generate (gen/choose 1 12)))
+                         (prepare-date (gen/generate (gen/choose 1 30)))])))
+
 (defn phone-number-gen []
   (str-util (str "+7-" (s/join "-" [(gen/generate (gen/choose 100 999))
                                     (gen/generate (gen/choose 100 999))
@@ -73,17 +79,17 @@
         last-part (gen/generate gen/char-alpha)]
     (str-util (str zero-part first-part second-part third-part four-part last-part))))
 
-(defn prepare-handbook-val []
+(defn handbook-val []
   (let [vals [(type-gen) (article-gen) (mark-gen) (material-gen) (price-gen) (gender-gen)]]
     (str "(" (s/join ", " vals) ")")))
 
-(defn prepare-clothe-example-val []
+(defn clothe-example-val []
   (let [vals [(gen/generate (gen/choose 1 8))
               (gen/generate (gen/choose 1 8))
               (gen/generate (gen/choose 1 20))]]
     (str "(" (s/join ", " vals) ")")))
 
-(defn prepare-magazine-example-val []
+(defn magazine-example-val []
   (let [vals [(str-util (fk/city))
               (str-util (s/join "_" (fg/words {:n 5})))
               (gen/generate (gen/choose 1 20))
@@ -93,13 +99,13 @@
                                             (gen/choose 100000000000 999999999999))]))]]
     (str "(" (s/join ", " vals) ")")))
 
-(defn prepare-clothe-in-mag-val []
+(defn clothe-in-mag-val []
   (let [vals [(gen/generate (gen/choose 1 30))
               (gen/generate (gen/choose 1 5))
               (gen/generate (gen/choose 10 30))]]
     (str "(" (s/join ", " vals) ")")))
 
-(defn prepare-employee-val []
+(defn employee-val []
   (let [vals [(gen/generate (gen/choose 1 5))
               (gen/generate (gen/choose 1 5))
               (str-util (nm/first-name))
@@ -108,6 +114,14 @@
               (hire-date-gen)
               (gen/generate (gen/choose 1000000000 9999999999))
               (phone-number-gen)]]
+    (str "(" (s/join ", " vals) ")")))
+
+(defn recepeit-val []
+  (let [vals [(gen/generate (gen/choose 1 20))
+              (gen/generate (gen/choose 1 5))
+              (gen/generate (gen/choose 500 15000))
+              (sold-date-gen)
+              (gen/generate (gen/choose 10 99))]]
     (str "(" (s/join ", " vals) ")")))
 
 (defn simple-gen [table row data]
@@ -132,12 +146,13 @@
 (defn -main [& args]
   (let [clothe-color (simple-gen "clothe_colour" "color" colour-map)
         clothe-size (simple-gen "clothe_size" "size" size-map)
-        clothe-handbook (complex-gen "clothe-handbook" (:clothe_handbook tables-fileds) 20 prepare-handbook-val)
-        clothe-examples (complex-gen "clothe_example" (:clothe_example tables-fileds) 30 prepare-clothe-example-val)
+        clothe-handbook (complex-gen "clothe-handbook" (:clothe_handbook tables-fileds) 20 handbook-val)
+        clothe-examples (complex-gen "clothe_example" (:clothe_example tables-fileds) 30 clothe-example-val)
         employee-position (employee-position-gen)
-        magazines (complex-gen "magazine" (:magazine tables-fileds) 5 prepare-magazine-example-val)
-        clothe-in-mag (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 prepare-clothe-in-mag-val)
-        employee (complex-gen "employee" (:employee tables-fileds) 20 prepare-employee-val)]
+        magazines (complex-gen "magazine" (:magazine tables-fileds) 5 magazine-example-val)
+        clothe-in-mag (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 clothe-in-mag-val)
+        employee (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
+        sales (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)]
     (spit filename (s/join "\n" [clothe-color
                                  clothe-size
                                  clothe-handbook
@@ -145,4 +160,5 @@
                                  employee-position
                                  magazines
                                  clothe-in-mag
-                                 employee]))))
+                                 employee
+                                 sales]))))
