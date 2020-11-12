@@ -128,8 +128,7 @@
 (defn clothe-sold-val []
   (let [vals [(gen/generate (gen/choose 1 50))
               (gen/generate (gen/choose 1 30))
-              (gen/generate (gen/choose 1 3))
-              ]]
+              (gen/generate (gen/choose 1 3))]]
     (str "(" (s/join ", " vals) ")")))
 
 (defn simple-gen [table row data]
