@@ -29,6 +29,9 @@
 (def employee
   "CREATE TABLE employee (employee_id serial PRIMARY KEY, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), FOREIGN KEY (position_id) REFERENCES employee_position (position_id), first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, birth_date DATE, hire_date DATE, passport_number int NOT NULL, phone_number varchar(50) NOT NULL);")
 
+(def sales-recepeit
+  "CREATE TABLE sales_recepeit (sales_recepeit serial PRIMARY KEY, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), FOREIGN_KEY (magazine_id) REFERENCES magazine (magazine_id), sum int NOT NULL, sold_date DATE, cashbox_num int NOT NULL);")
+
 ;;(map vector [1 2 3] [1 2 3])
 
 (def tables [clothe-colour
@@ -37,4 +40,5 @@
              employee-position
              magazine
              clothe-in-store
-             employee])
+             employee
+             sales-recepeit])
