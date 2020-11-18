@@ -41,8 +41,6 @@
 (def clothe-ordered-list
   "CREATE TABLE clothe_order_list (clothe_ordered_list serial PRIMARY KEY, FOREIGN KEY (clothe_order_id) REFERENCES clothe_order (clothe_order_id), FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), order_date DATE);")
 
-;;(map vector [1 2 3] [1 2 3])
-
 (def tables [clothe-colour
              clothe-size
              clothe-handbook

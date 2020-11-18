@@ -180,5 +180,10 @@
    (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
    (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)])
 
+(def prepared-data-for-write
+  (let [concated (vec (map vector mig/tables generated-data))
+        stringified (map (fn [[migration data]] (s/join "\n" [migration data])) concated)]
+    (s/join "\n\n" stringified)))
+
 (defn -main [& args]
-    (spit filename (s/join "\n" generated-data)))
+    (spit filename prepared-data-for-write))
