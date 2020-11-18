@@ -16,6 +16,10 @@
 (def clothe-example
   "CREATE TABLE clothe_example (clothe_id serial PRIMARY KEY, FOREIGN KEY (size_id) REFERENCES clothe_size (size_id), FOREIGN KEY (colour_id) REFERENCES clothe_colour (colour_id), FOREIGN KEY (handbook_id) REFERENCES clothe_handbook (handbook_id));")
 
+(def employee-position
+  "CREATE TABLE employee_position (position_id serial PRIMARY KEY, position_name varchar(20) NOT NULL, position_salary int NOT NULL);")
+
 (def tables [clothe-colour
              clothe-size
-             clothe-handbook])
+             clothe-handbook
+             employee-position])
