@@ -32,6 +32,15 @@
 (def sales-recepeit
   "CREATE TABLE sales_recepeit (sales_recepeit serial PRIMARY KEY, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), FOREIGN_KEY (magazine_id) REFERENCES magazine (magazine_id), sum int NOT NULL, sold_date DATE, cashbox_num int NOT NULL);")
 
+(def clothe-sold-list
+  "")
+
+(def clothe-order
+  "")
+
+(def clothe-order-list
+  "")
+
 ;;(map vector [1 2 3] [1 2 3])
 
 (def tables [clothe-colour
