@@ -186,4 +186,4 @@
     (s/join "\n\n" stringified)))
 
 (defn -main [& args]
-    (spit filename prepared-data-for-write))
+  (spit filename prepared-data-for-write))
