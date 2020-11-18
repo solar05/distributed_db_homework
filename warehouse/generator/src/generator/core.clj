@@ -4,7 +4,8 @@
    [clojure.string :as s]
    [faker.generate :as fg]
    [faker.name :as nm]
-   [faker.address :as fk]))
+   [faker.address :as fk]
+   [generator.migrations :as mig]))
 
 (def filename "queries.txt")
 
