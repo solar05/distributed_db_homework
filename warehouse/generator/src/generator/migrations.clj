@@ -36,7 +36,7 @@
   "CREATE TABLE clothe_sold_list (clothe_sold_list_id serial PRIMARY KEY, FOREIGN KEY (sales_recepeit_id) REFERENCES sales_recepeit (sales_recepeit_id), FOREIGN KEY (clothe_in_store_id) REFERENCES clothe_in_store (clothe_in_store_id), quantity int NOT NULL);")
 
 (def clothe-order
-  "")
+  "CREATE TABLE clothe_order (clothe_order_id serial PRIMARY KEY, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), is_ordered boolean NOT NULL, quantity int NOT NULL);")
 
 (def clothe-order-list
   "")
@@ -50,4 +50,7 @@
              magazine
              clothe-in-store
              employee
-             sales-recepeit])
+             sales-recepeit
+             clothe-sold-list
+             clothe-order
+             clothe-order-list])
