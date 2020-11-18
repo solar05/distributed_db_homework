@@ -33,7 +33,7 @@
   "CREATE TABLE sales_recepeit (sales_recepeit serial PRIMARY KEY, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), FOREIGN_KEY (magazine_id) REFERENCES magazine (magazine_id), sum int NOT NULL, sold_date DATE, cashbox_num int NOT NULL);")
 
 (def clothe-sold-list
-  "")
+  "CREATE TABLE clothe_sold_list (clothe_sold_list_id serial PRIMARY KEY, FOREIGN KEY (sales_recepeit_id) REFERENCES sales_recepeit (sales_recepeit_id), FOREIGN KEY (clothe_in_store_id) REFERENCES clothe_in_store (clothe_in_store_id), quantity int NOT NULL);")
 
 (def clothe-order
   "")
