@@ -166,28 +166,19 @@
                      (fn [elem] (str "(" (str-util (first elem)) ", " (last elem) ")"))
                      position-map)) ";"))
 
+(def generated-data
+  [(simple-gen "clothe_colour" "color" colour-map)
+   (simple-gen "clothe_size" "size" size-map)
+   (complex-gen "clothe-handbook" (:clothe_handbook tables-fileds) 20 handbook-val)
+   (complex-gen "clothe_example" (:clothe_example tables-fileds) 30 clothe-example-val)
+   (employee-position-gen)
+   (complex-gen "magazine" (:magazine tables-fileds) 5 magazine-example-val)
+   (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 clothe-in-mag-val)
+   (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
+   (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)
+   (complex-gen "clothe_sold_list" (:clothe_sold tables-fileds) 30 clothe-sold-val)
+   (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
+   (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)])
+
 (defn -main [& args]
-  (let [clothe-color (simple-gen "clothe_colour" "color" colour-map)
-        clothe-size (simple-gen "clothe_size" "size" size-map)
-        clothe-handbook (complex-gen "clothe-handbook" (:clothe_handbook tables-fileds) 20 handbook-val)
-        clothe-examples (complex-gen "clothe_example" (:clothe_example tables-fileds) 30 clothe-example-val)
-        employee-position (employee-position-gen)
-        magazines (complex-gen "magazine" (:magazine tables-fileds) 5 magazine-example-val)
-        clothe-in-mag (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 clothe-in-mag-val)
-        employee (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
-        sales (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)
-        sold-clothe (complex-gen "clothe_sold_list" (:clothe_sold tables-fileds) 30 clothe-sold-val)
-        clothe-order (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
-        clothe-order-list (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)]
-    (spit filename (s/join "\n" [clothe-color
-                                 clothe-size
-                                 clothe-handbook
-                                 clothe-examples
-                                 employee-position
-                                 magazines
-                                 clothe-in-mag
-                                 employee
-                                 sales
-                                 sold-clothe
-                                 clothe-order
-                                 clothe-order-list]))))
+    (spit filename (s/join "\n" generated-data)))
