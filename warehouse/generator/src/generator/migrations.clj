@@ -4,4 +4,7 @@
    [clojure.string :as s]
    [faker.generate :as fg]))
 
-(def test [1 2 3])
+(def clothe-colour
+  "CREATE TABLE clothe_colour (colour_id serial PRIMARY KEY, colour TEXT NOT NULL);")
+
+(def tables [clothe-colour])
