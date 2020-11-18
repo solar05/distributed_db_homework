@@ -38,8 +38,8 @@
 (def clothe-order
   "CREATE TABLE clothe_order (clothe_order_id serial PRIMARY KEY, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), is_ordered boolean NOT NULL, quantity int NOT NULL);")
 
-(def clothe-order-list
-  "")
+(def clothe-ordered-list
+  "CREATE TABLE clothe_order_list (clothe_ordered_list serial PRIMARY KEY, FOREIGN KEY (clothe_order_id) REFERENCES clothe_order (clothe_order_id), FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), order_date DATE);")
 
 ;;(map vector [1 2 3] [1 2 3])
 
@@ -53,4 +53,4 @@
              sales-recepeit
              clothe-sold-list
              clothe-order
-             clothe-order-list])
+             clothe-ordered-list])
