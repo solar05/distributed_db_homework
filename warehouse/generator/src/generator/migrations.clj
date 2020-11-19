@@ -41,6 +41,11 @@
 (def clothe-ordered-list
   "CREATE TABLE clothe_order_list (clothe_ordered_list serial PRIMARY KEY, FOREIGN KEY (clothe_order_id) REFERENCES clothe_order (clothe_order_id), FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), order_date DATE);")
 
+(def clothe-in-stock
+  "CREATE TABLE clothe_in_stock (clothe_in_stock_id serial PRIMARY KEY, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), quantity int NOT NULL, place int NOT NULL);")
+
+
+
 (def tables [clothe-colour
              clothe-size
              clothe-handbook
