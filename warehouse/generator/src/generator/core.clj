@@ -24,7 +24,8 @@
    :clothe_sold ["sales_recepeit_id" "clothe_in_store_id" "quantity"]
    :clothe_order ["employee_id" "magazine_id" "is_ordered" "quantity"]
    :clothe_order_list ["clothe_order_id" "clothe_id" "order_date"]
-   :clothe_in_stock ["clothe_id" "quantity" "place"]})
+   :clothe_in_stock ["clothe_id" "quantity" "place"]
+   :clothe_supplied ["clothe_in_stock_id" "clothe_order_id" "arrive_date" "quantity"]})
 
 
 (def position-map [["admin" 50000] ["operator" 45000]
@@ -66,6 +67,11 @@
                          (prepare-date (gen/generate (gen/choose 1 30)))])))
 
 (defn sold-date-gen []
+  (str-util (s/join "-" [(gen/generate (gen/choose 2019 2020))
+                         (prepare-date (gen/generate (gen/choose 1 12)))
+                         (prepare-date (gen/generate (gen/choose 1 30)))])))
+
+(defn arrive-date-gen []
   (str-util (s/join "-" [(gen/generate (gen/choose 2019 2020))
                          (prepare-date (gen/generate (gen/choose 1 12)))
                          (prepare-date (gen/generate (gen/choose 1 30)))])))
@@ -155,6 +161,13 @@
               (gen/generate (gen/choose 1 15))]]
     (str "(" (s/join ", " vals) ")")))
 
+(defn clothe-supplied-val []
+  (let [vals [(gen/generate (gen/choose 1 20))
+              (gen/generate (gen/choose 1 15))
+              (arrive-date-gen)
+              (gen/generate (gen/choose 1 15))]]
+    (str "(" (s/join ", " vals) ")")))
+
 (defn simple-gen [table row data]
   (str "INSERT INTO " table
        " (" row ") VALUES"
@@ -187,7 +200,8 @@
    (complex-gen "clothe_sold_list" (:clothe_sold tables-fileds) 30 clothe-sold-val)
    (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
    (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)
-   (complex-gen "clothe_in_stock" (:clothe_in_stock tables-fileds) 20 clothe-in-stock-val)])
+   (complex-gen "clothe_in_stock" (:clothe_in_stock tables-fileds) 20 clothe-in-stock-val)
+   (complex-gen "clothe_supplied" (:clothe_supplied tables-fileds) 50 clothe-supplied-val)])
 
 (def prepared-data-for-write
   (let [concated (vec (map vector mig/tables generated-data))
