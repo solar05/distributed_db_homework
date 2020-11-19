@@ -59,4 +59,6 @@
              sales-recepeit
              clothe-sold-list
              clothe-order
-             clothe-ordered-list])
+             clothe-ordered-list
+             clothe-in-stock
+             clothe-supplied])

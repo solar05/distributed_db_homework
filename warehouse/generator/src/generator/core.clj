@@ -23,7 +23,9 @@
    :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]
    :clothe_sold ["sales_recepeit_id" "clothe_in_store_id" "quantity"]
    :clothe_order ["employee_id" "magazine_id" "is_ordered" "quantity"]
-   :clothe_order_list ["clothe_order_id" "clothe_id" "order_date"]})
+   :clothe_order_list ["clothe_order_id" "clothe_id" "order_date"]
+   :clothe_in_stock ["clothe_id" "quantity" "place"]})
+
 
 (def position-map [["admin" 50000] ["operator" 45000]
                    ["seller" 40000] ["consultant" 35000]
@@ -147,6 +149,12 @@
               (sold-date-gen)]]
     (str "(" (s/join ", " vals) ")")))
 
+(defn clothe-in-stock-val []
+  (let [vals [(gen/generate (gen/choose 1 30))
+              (gen/generate (gen/choose 1 30))
+              (gen/generate (gen/choose 1 15))]]
+    (str "(" (s/join ", " vals) ")")))
+
 (defn simple-gen [table row data]
   (str "INSERT INTO " table
        " (" row ") VALUES"
@@ -178,7 +186,8 @@
    (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)
    (complex-gen "clothe_sold_list" (:clothe_sold tables-fileds) 30 clothe-sold-val)
    (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
-   (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)])
+   (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)
+   (complex-gen "clothe_in_stock" (:clothe_in_stock tables-fileds) 20 clothe-in-stock-val)])
 
 (def prepared-data-for-write
   (let [concated (vec (map vector mig/tables generated-data))
