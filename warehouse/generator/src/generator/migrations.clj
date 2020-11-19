@@ -44,6 +44,9 @@
 (def clothe-in-stock
   "CREATE TABLE clothe_in_stock (clothe_in_stock_id serial PRIMARY KEY, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), quantity int NOT NULL, place int NOT NULL);")
 
+(def clothe-supplied
+  "CREATE TABLE clothe_supplied (clothe_supllied_id serial PRIMARY KEY, FOREIGN KEY (clothe_in_stock_id) REFERENCES clothe_in_stock (clothe_in_stock_id), FOREIGN KEY (clothe_order_id) REFERENCES clothe_order (clothe_order_id), arrive_date DATE NOT NULL, quantity int NOT NULL);")
+
 
 
 (def tables [clothe-colour
