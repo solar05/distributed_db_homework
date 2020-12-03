@@ -182,17 +182,17 @@
        (s/join ", " (repeatedly samples-count data-fn)) ";"))
 
 (defn employee-position-gen []
-  (str "INSERT INTO employee_position (position-name, position-salary) VALUES "
+  (str "INSERT INTO employee_position (position_name, position_salary) VALUES "
        (s/join ", " (map
                      (fn [elem] (str "(" (str-util (first elem)) ", " (last elem) ")"))
                      position-map)) ";"))
 
 (def generated-data
-  [(simple-gen "clothe_colour" "color" colour-map)
+  [(simple-gen "clothe_colour" "colour" colour-map)
    (simple-gen "clothe_size" "size" size-map)
-   (complex-gen "clothe-handbook" (:clothe_handbook tables-fileds) 20 handbook-val)
-   (complex-gen "clothe_example" (:clothe_example tables-fileds) 30 clothe-example-val)
+   (complex-gen "clothe_handbook" (:clothe_handbook tables-fileds) 20 handbook-val)
    (employee-position-gen)
+   (complex-gen "clothe_example" (:clothe_example tables-fileds) 30 clothe-example-val)
    (complex-gen "magazine" (:magazine tables-fileds) 5 magazine-example-val)
    (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 clothe-in-mag-val)
    (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
