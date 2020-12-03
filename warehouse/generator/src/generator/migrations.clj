@@ -21,19 +21,19 @@
   "CREATE TABLE employee_position (position_id serial PRIMARY KEY, position_name varchar(20) NOT NULL, position_salary int NOT NULL);")
 
 (def magazine
-  "CREATE TABLE magazine (magazine_id serial PRIMARY KEY, city varchar(50) NOT NULL, street varchar(50) NOT NULL, house int NOT NULL, inn int NOT NULL)")
+  "CREATE TABLE magazine (magazine_id serial PRIMARY KEY, city varchar(50) NOT NULL, street varchar(50) NOT NULL, house int NOT NULL, inn int NOT NULL);")
 
 (def clothe-in-store
-  "CREATE TABLE clothe_in_store (clothe_in_store_id serial PRIMARY KEY, clothe_id int, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), quantity int NOT NULL)")
+  "CREATE TABLE clothe_in_store (clothe_in_store_id serial PRIMARY KEY, clothe_id int, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), quantity int NOT NULL);")
 
 (def employee
-  "CREATE TABLE employee (employee_id serial PRIMARY KEY, magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), position_id int, FOREIGN KEY (position_id) REFERENCES employee_position (position_id), first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, birth_date DATE, hire_date DATE, passport_number int NOT NULL, phone_number varchar(50) NOT NULL);")
+  "CREATE TABLE employee (employee_id serial PRIMARY KEY, magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), position_id int, FOREIGN KEY (position_id) REFERENCES employee_position (position_id), first_name varchar(50) NOT NULL, last_name varchar(50) NOT NULL, birth_date DATE, hire_date DATE, passport_number varchar(40) NOT NULL, phone_number varchar(50) NOT NULL);")
 
 (def sales-recepeit
-  "CREATE TABLE sales_recepeit (sales_recepeit serial PRIMARY KEY, employee_id int, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), magazine_id int, FOREIGN_KEY (magazine_id) REFERENCES magazine (magazine_id), sum int NOT NULL, sold_date DATE, cashbox_num int NOT NULL);")
+  "CREATE TABLE sales_recepeit (sales_recepeit serial PRIMARY KEY, employee_id int, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), sum int NOT NULL, sold_date DATE, cashbox_num int NOT NULL);")
 
 (def clothe-sold-list
-  "CREATE TABLE clothe_sold_list (clothe_sold_list_id serial PRIMARY KEY, sales_recepeit_id int, FOREIGN KEY (sales_recepeit_id) REFERENCES sales_recepeit (sales_recepeit_id), clothe_in_store_id int, FOREIGN KEY (clothe_in_store_id) REFERENCES clothe_in_store (clothe_in_store_id), quantity int NOT NULL);")
+  "CREATE TABLE clothe_sold_list (clothe_sold_list_id serial PRIMARY KEY, sales_recepeit int, FOREIGN KEY (sales_recepeit) REFERENCES sales_recepeit (sales_recepeit), clothe_in_store_id int, FOREIGN KEY (clothe_in_store_id) REFERENCES clothe_in_store (clothe_in_store_id), quantity int NOT NULL);")
 
 (def clothe-order
   "CREATE TABLE clothe_order (clothe_order_id serial PRIMARY KEY, employee_id int, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), is_ordered boolean NOT NULL, quantity int NOT NULL);")
@@ -46,8 +46,6 @@
 
 (def clothe-supplied
   "CREATE TABLE clothe_supplied (clothe_supllied_id serial PRIMARY KEY, clothe_in_stock_id int, FOREIGN KEY (clothe_in_stock_id) REFERENCES clothe_in_stock (clothe_in_stock_id), clothe_order_id int, FOREIGN KEY (clothe_order_id) REFERENCES clothe_order (clothe_order_id), arrive_date DATE NOT NULL, quantity int NOT NULL);")
-
-
 
 (def tables [clothe-colour
              clothe-size

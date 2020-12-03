@@ -21,7 +21,7 @@
    :clothe_in_store ["clothe_id" "magazine_id" "quantity"]
    :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number"]
    :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]
-   :clothe_sold ["sales_recepeit_id" "clothe_in_store_id" "quantity"]
+   :clothe_sold ["sales_recepeit" "clothe_in_store_id" "quantity"]
    :clothe_order ["employee_id" "magazine_id" "is_ordered" "quantity"]
    :clothe_order_list ["clothe_order_id" "clothe_id" "order_date"]
    :clothe_in_stock ["clothe_id" "quantity" "place"]
@@ -106,9 +106,9 @@
               (str-util (s/join "_" (fg/words {:n 5})))
               (gen/generate (gen/choose 1 20))
               (gen/generate (gen/elements [(gen/generate
-                                            (gen/choose 1000000000 9999999999))
+                                            (gen/choose 10000 99999))
                                            (gen/generate
-                                            (gen/choose 100000000000 999999999999))]))]]
+                                            (gen/choose 10000 99999))]))]]
     (str "(" (s/join ", " vals) ")")))
 
 (defn clothe-in-mag-val []
@@ -124,7 +124,7 @@
               (str-util (nm/last-name))
               (birth-date-gen)
               (hire-date-gen)
-              (gen/generate (gen/choose 1000000000 9999999999))
+              (str-util (gen/generate (gen/choose 1000000000 9999999999)))
               (phone-number-gen)]]
     (str "(" (s/join ", " vals) ")")))
 
