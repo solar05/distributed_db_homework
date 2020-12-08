@@ -18,3 +18,6 @@ create-migrations:
 	mix phx.gen.schema SalesRecepeit sales_recepeit sum:integer sold_date:date cashbox_num:integer; \
 	mix phx.gen.schema ClotheSoldList clothe_sold_list quantity:integer; \
 	mix phx.gen.schema ClotheOrder clothe_order is_ordered:boolean quantity:integer; \
+	mix phx.gen.schema ClotheOrderList clothe_order_list order_date:date; \
+	mix phx.gen.schema ClotheInStock clothe_in_stock quantity:integer place:integer; \
+	mix phx.gen.schema ClotheSupplied clothe_supplied arrive_date:date quantity:integer; \
