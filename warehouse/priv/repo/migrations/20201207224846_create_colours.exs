@@ -1,8 +1,8 @@
-defmodule Warehouse.Repo.Migrations.CreateColours do
+defmodule Warehouse.Repo.Migrations.CreateClotheColour do
   use Ecto.Migration
 
   def change do
-    create table(:colours) do
+    create table(:clothe_colour) do
       add :colour, :string, null: false
 
       timestamps()

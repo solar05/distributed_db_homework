@@ -2,7 +2,7 @@ defmodule Warehouse.ClotheExample do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "clothe_examples" do
+  schema "clothe_example" do
     timestamps()
   end
 

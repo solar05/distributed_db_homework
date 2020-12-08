@@ -1,8 +1,8 @@
-defmodule Warehouse.Colour do
+defmodule Warehouse.ClotheColour do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "colours" do
+  schema "clothe_colour" do
     field :colour, :string
 
     timestamps()

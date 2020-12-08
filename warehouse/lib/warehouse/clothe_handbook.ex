@@ -1,8 +1,8 @@
-defmodule Warehouse.Handbook do
+defmodule Warehouse.ClotheHandbook do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "handbooks" do
+  schema "clothe_handbook" do
     field :article, :string
     field :gender, :string
     field :mark, :string

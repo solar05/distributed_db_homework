@@ -1,8 +1,8 @@
-defmodule Warehouse.Repo.Migrations.CreateSizes do
+defmodule Warehouse.Repo.Migrations.CreateClotheSize do
   use Ecto.Migration
 
   def change do
-    create table(:sizes) do
+    create table(:clothe_size) do
       add :size, :string, null: false
 
       timestamps()

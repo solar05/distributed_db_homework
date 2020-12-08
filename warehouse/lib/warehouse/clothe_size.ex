@@ -1,8 +1,8 @@
-defmodule Warehouse.Size do
+defmodule Warehouse.ClotheSize do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "sizes" do
+  schema "clothe_size" do
     field :size, :string
 
     timestamps()
