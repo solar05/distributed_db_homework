@@ -9,6 +9,8 @@
 
 (def filename "queries.txt")
 
+(def data-filename "data.txt")
+
 (def colour-map ["red" "green" "blue" "grey" "brown" "pink"
                  "black" "white" "yellow" "purple"])
 
@@ -203,10 +205,15 @@
    (complex-gen "clothe_in_stock" (:clothe_in_stock tables-fileds) 20 clothe-in-stock-val)
    (complex-gen "clothe_supplied" (:clothe_supplied tables-fileds) 50 clothe-supplied-val)])
 
-(def prepared-data-for-write
+(def prepared-migrations-for-write
   (let [concated (vec (map vector mig/tables generated-data))
         stringified (map (fn [[migration data]] (s/join "\n" [migration data])) concated)]
     (s/join "\n\n" stringified)))
 
+(def prepared-data-for-write
+  (s/join "\n" generated-data))
+
 (defn -main [& args]
-  (spit filename prepared-data-for-write))
+  (do
+    (spit filename prepared-migrations-for-write)
+    (spit data-filename prepared-data-for-write)))
