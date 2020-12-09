@@ -6,7 +6,6 @@ defmodule Warehouse.ClotheInStock do
     field :place, :integer
     field :quantity, :integer
 
-    timestamps()
   end
 
   @doc false

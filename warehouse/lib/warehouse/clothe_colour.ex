@@ -5,7 +5,6 @@ defmodule Warehouse.ClotheColour do
   schema "clothe_colour" do
     field :colour, :string
 
-    timestamps()
   end
 
   @doc false

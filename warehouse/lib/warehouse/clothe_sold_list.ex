@@ -5,7 +5,6 @@ defmodule Warehouse.ClotheSoldList do
   schema "clothe_sold_list" do
     field :quantity, :integer
 
-    timestamps()
   end
 
   @doc false

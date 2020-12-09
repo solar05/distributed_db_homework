@@ -8,7 +8,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheSupplied do
       add :arrive_date, :date, null: false
       add :quantity, :integer, null: false
 
-      timestamps()
     end
 
   end

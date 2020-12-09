@@ -8,7 +8,6 @@ defmodule Warehouse.Magazine do
     field :inn, :integer
     field :street, :string
 
-    timestamps()
   end
 
   @doc false

@@ -7,7 +7,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheOrderList do
       add :clothe_id, references(:clothe_example), null: false
       add :order_date, :date, null: false
 
-      timestamps()
     end
 
   end

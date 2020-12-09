@@ -6,7 +6,6 @@ defmodule Warehouse.ClotheOrder do
     field :is_ordered, :boolean, default: false
     field :quantity, :integer
 
-    timestamps()
   end
 
   @doc false

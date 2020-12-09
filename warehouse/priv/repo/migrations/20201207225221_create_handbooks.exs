@@ -9,7 +9,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheHandbook do
       add :price, :integer, null: false
       add :gender, :string, null: false
 
-      timestamps()
     end
 
   end

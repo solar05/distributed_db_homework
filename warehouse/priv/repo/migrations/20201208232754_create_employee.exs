@@ -11,8 +11,6 @@ defmodule Warehouse.Repo.Migrations.CreateEmployee do
       add :hire_date, :date, null: false
       add :passport_number, :string, null: false
       add :phone_number, :string, null: false
-
-      timestamps()
     end
 
   end

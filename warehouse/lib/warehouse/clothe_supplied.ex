@@ -6,7 +6,6 @@ defmodule Warehouse.ClotheSupplied do
     field :arrive_date, :date
     field :quantity, :integer
 
-    timestamps()
   end
 
   @doc false

@@ -8,7 +8,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheOrder do
       add :is_ordered, :boolean, default: false, null: false
       add :quantity, :integer, null: false
 
-      timestamps()
     end
 
   end

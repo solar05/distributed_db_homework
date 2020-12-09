@@ -1,0 +1,24 @@
+<h1>Listing Clothe example</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for clothe_example <- @clothe_example do %>
+    <tr>
+
+      <td>
+        <span><%= link "Show", to: Routes.sales_clothe_example_path(@conn, :show, clothe_example) %></span>
+        <span><%= link "Edit", to: Routes.sales_clothe_example_path(@conn, :edit, clothe_example) %></span>
+        <span><%= link "Delete", to: Routes.sales_clothe_example_path(@conn, :delete, clothe_example), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Clothe example", to: Routes.sales_clothe_example_path(@conn, :new) %></span>

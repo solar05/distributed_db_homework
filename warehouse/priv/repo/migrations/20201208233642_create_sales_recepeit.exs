@@ -9,7 +9,6 @@ defmodule Warehouse.Repo.Migrations.CreateSalesRecepeit do
       add :sold_date, :date, null: false
       add :cashbox_num, :integer, null: false
 
-      timestamps()
     end
 
   end

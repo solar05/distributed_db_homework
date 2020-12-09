@@ -7,7 +7,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheInStock do
       add :quantity, :integer, null: false
       add :place, :integer, null: false
 
-      timestamps()
     end
 
   end

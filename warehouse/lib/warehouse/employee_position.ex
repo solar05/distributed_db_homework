@@ -6,7 +6,6 @@ defmodule Warehouse.EmployeePosition do
     field :position_name, :string
     field :position_salary, :integer
 
-    timestamps()
   end
 
   @doc false

@@ -6,7 +6,6 @@ defmodule Warehouse.Repo.Migrations.CreateEmployeePosition do
       add :position_name, :string, null: false
       add :position_salary, :integer, null: false
 
-      timestamps()
     end
 
   end

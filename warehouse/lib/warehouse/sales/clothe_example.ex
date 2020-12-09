@@ -1,8 +1,9 @@
-defmodule Warehouse.ClotheExample do
+defmodule Warehouse.Sales.ClotheExample do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "clothe_example" do
+
   end
 
   @doc false

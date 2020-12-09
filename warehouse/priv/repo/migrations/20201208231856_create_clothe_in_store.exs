@@ -7,7 +7,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheInStore do
       add :magazine_id, references(:magazine), null: false
       add :quantity, :integer, null: false
 
-      timestamps()
     end
 
   end

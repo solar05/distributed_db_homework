@@ -10,7 +10,6 @@ defmodule Warehouse.Employee do
     field :passport_number, :string
     field :phone_number, :string
 
-    timestamps()
   end
 
   @doc false

@@ -6,7 +6,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheExample do
       add :colour_id, references(:clothe_colour), null: false
       add :size_id, references(:clothe_size), null: false
       add :handbook_id, references(:clothe_handbook), null: false
-      timestamps()
     end
 
   end

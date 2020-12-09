@@ -7,7 +7,6 @@ defmodule Warehouse.SalesRecepeit do
     field :sold_date, :date
     field :sum, :integer
 
-    timestamps()
   end
 
   @doc false

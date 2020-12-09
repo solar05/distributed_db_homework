@@ -8,7 +8,6 @@ defmodule Warehouse.Repo.Migrations.CreateMagazine do
       add :house, :integer, null: false
       add :inn, :integer, null: false
 
-      timestamps()
     end
 
   end

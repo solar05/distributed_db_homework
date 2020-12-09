@@ -4,8 +4,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheSize do
   def change do
     create table(:clothe_size) do
       add :size, :string, null: false
-
-      timestamps()
     end
 
   end

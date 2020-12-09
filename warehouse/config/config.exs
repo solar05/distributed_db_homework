@@ -8,7 +8,9 @@
 use Mix.Config
 
 config :warehouse,
-  ecto_repos: [Warehouse.Repo]
+  ecto_repos: [Warehouse.Repo],
+  magazine:  {:system, "MAGAZINE", 1}
+
 
 # Configures the endpoint
 config :warehouse, WarehouseWeb.Endpoint,

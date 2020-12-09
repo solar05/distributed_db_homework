@@ -5,7 +5,6 @@ defmodule Warehouse.ClotheSize do
   schema "clothe_size" do
     field :size, :string
 
-    timestamps()
   end
 
   @doc false

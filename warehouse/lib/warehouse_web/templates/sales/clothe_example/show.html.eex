@@ -1,0 +1,8 @@
+<h1>Show Clothe example</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.sales_clothe_example_path(@conn, :edit, @clothe_example) %></span>
+<span><%= link "Back", to: Routes.sales_clothe_example_path(@conn, :index) %></span>

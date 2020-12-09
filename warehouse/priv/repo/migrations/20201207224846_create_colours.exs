@@ -5,7 +5,6 @@ defmodule Warehouse.Repo.Migrations.CreateClotheColour do
     create table(:clothe_colour) do
       add :colour, :string, null: false
 
-      timestamps()
     end
 
   end

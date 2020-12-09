@@ -9,7 +9,6 @@ defmodule Warehouse.ClotheHandbook do
     field :price, :integer
     field :type, :string
 
-    timestamps()
   end
 
   @doc false
