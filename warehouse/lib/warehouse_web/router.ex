@@ -17,6 +17,7 @@ defmodule WarehouseWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/clothes", ClotheInStoreController
   end
 
   # Other scopes may use custom stacks.

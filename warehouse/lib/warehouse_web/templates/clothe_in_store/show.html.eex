@@ -1,0 +1,13 @@
+<h1>Show Clothe in store</h1>
+
+<ul>
+
+  <li>
+    <strong>Quantity:</strong>
+    <%= @clothe_in_store.quantity %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.clothe_in_store_path(@conn, :edit, @clothe_in_store) %></span>
+<span><%= link "Back", to: Routes.clothe_in_store_path(@conn, :index) %></span>

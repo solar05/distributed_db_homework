@@ -1,0 +1,26 @@
+<h1>Listing Clothe in store</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for clothe_in_store <- @clothe_in_store do %>
+    <tr>
+      <td><%= clothe_in_store.quantity %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.clothe_in_store_path(@conn, :show, clothe_in_store) %></span>
+        <span><%= link "Edit", to: Routes.clothe_in_store_path(@conn, :edit, clothe_in_store) %></span>
+        <span><%= link "Delete", to: Routes.clothe_in_store_path(@conn, :delete, clothe_in_store), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Clothe in store", to: Routes.clothe_in_store_path(@conn, :new) %></span>

@@ -59,4 +59,63 @@ defmodule Warehouse.SalesTest do
       assert %Ecto.Changeset{} = Sales.change_clothe_example(clothe_example)
     end
   end
+
+  describe "clothe_in_store" do
+    alias Warehouse.Sales.ClotheInStore
+
+    @valid_attrs %{quantity: 42}
+    @update_attrs %{quantity: 43}
+    @invalid_attrs %{quantity: nil}
+
+    def clothe_in_store_fixture(attrs \\ %{}) do
+      {:ok, clothe_in_store} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sales.create_clothe_in_store()
+
+      clothe_in_store
+    end
+
+    test "list_clothe_in_store/0 returns all clothe_in_store" do
+      clothe_in_store = clothe_in_store_fixture()
+      assert Sales.list_clothe_in_store() == [clothe_in_store]
+    end
+
+    test "get_clothe_in_store!/1 returns the clothe_in_store with given id" do
+      clothe_in_store = clothe_in_store_fixture()
+      assert Sales.get_clothe_in_store!(clothe_in_store.id) == clothe_in_store
+    end
+
+    test "create_clothe_in_store/1 with valid data creates a clothe_in_store" do
+      assert {:ok, %ClotheInStore{} = clothe_in_store} = Sales.create_clothe_in_store(@valid_attrs)
+      assert clothe_in_store.quantity == 42
+    end
+
+    test "create_clothe_in_store/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sales.create_clothe_in_store(@invalid_attrs)
+    end
+
+    test "update_clothe_in_store/2 with valid data updates the clothe_in_store" do
+      clothe_in_store = clothe_in_store_fixture()
+      assert {:ok, %ClotheInStore{} = clothe_in_store} = Sales.update_clothe_in_store(clothe_in_store, @update_attrs)
+      assert clothe_in_store.quantity == 43
+    end
+
+    test "update_clothe_in_store/2 with invalid data returns error changeset" do
+      clothe_in_store = clothe_in_store_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sales.update_clothe_in_store(clothe_in_store, @invalid_attrs)
+      assert clothe_in_store == Sales.get_clothe_in_store!(clothe_in_store.id)
+    end
+
+    test "delete_clothe_in_store/1 deletes the clothe_in_store" do
+      clothe_in_store = clothe_in_store_fixture()
+      assert {:ok, %ClotheInStore{}} = Sales.delete_clothe_in_store(clothe_in_store)
+      assert_raise Ecto.NoResultsError, fn -> Sales.get_clothe_in_store!(clothe_in_store.id) end
+    end
+
+    test "change_clothe_in_store/1 returns a clothe_in_store changeset" do
+      clothe_in_store = clothe_in_store_fixture()
+      assert %Ecto.Changeset{} = Sales.change_clothe_in_store(clothe_in_store)
+    end
+  end
 end
