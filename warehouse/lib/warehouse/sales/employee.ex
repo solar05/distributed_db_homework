@@ -1,4 +1,4 @@
-defmodule Warehouse.Employee do
+defmodule Warehouse.Sales.Employee do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,7 +9,8 @@ defmodule Warehouse.Employee do
     field :last_name, :string
     field :passport_number, :string
     field :phone_number, :string
-
+    field :password, :string
+    belongs_to :magazine, Warehouse.Sales.Magazine
   end
 
   @doc false

@@ -9,15 +9,30 @@ defmodule WarehouseWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :guardian do
+    plug WarehouseWeb.Authentication.Pipeline
+  end
+
+  pipeline :browser_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", WarehouseWeb do
-    pipe_through :browser
+    pipe_through [:browser, :guardian]
 
     get "/", PageController, :index
     resources "/clothes", ClotheInStoreController
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+  end
+
+  scope "/admin", WarehouseWeb do
+    pipe_through [:browser, :guardian, :browser_auth]
+    delete "/logout", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.

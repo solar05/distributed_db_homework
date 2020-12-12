@@ -1,0 +1,24 @@
+<h1>Listing Magazine</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for magazine <- @magazine do %>
+    <tr>
+
+      <td>
+        <span><%= link "Show", to: Routes.sales_magazine_path(@conn, :show, magazine) %></span>
+        <span><%= link "Edit", to: Routes.sales_magazine_path(@conn, :edit, magazine) %></span>
+        <span><%= link "Delete", to: Routes.sales_magazine_path(@conn, :delete, magazine), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Magazine", to: Routes.sales_magazine_path(@conn, :new) %></span>

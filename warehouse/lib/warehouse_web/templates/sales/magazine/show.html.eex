@@ -1,0 +1,8 @@
+<h1>Show Magazine</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.sales_magazine_path(@conn, :edit, @magazine) %></span>
+<span><%= link "Back", to: Routes.sales_magazine_path(@conn, :index) %></span>

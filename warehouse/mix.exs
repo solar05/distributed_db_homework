@@ -45,7 +45,9 @@ defmodule Warehouse.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:confex, "~> 3.5.0"}
+      {:confex, "~> 3.5.0"},
+      {:guardian, "~> 2.0"},
+      {:bodyguard, "~> 2.4"}
     ]
   end
 

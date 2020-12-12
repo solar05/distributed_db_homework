@@ -1,4 +1,4 @@
-defmodule Warehouse.Magazine do
+defmodule Warehouse.Sales.Magazine do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -10,7 +10,6 @@ defmodule Warehouse.Magazine do
 
   end
 
-  @doc false
   def changeset(magazine, attrs) do
     magazine
     |> cast(attrs, [:city, :street, :house, :inn])
