@@ -7,7 +7,6 @@ defmodule Warehouse.Sales.Magazine do
     field :house, :integer
     field :inn, :integer
     field :street, :string
-
   end
 
   def changeset(magazine, attrs) do

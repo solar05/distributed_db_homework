@@ -19,7 +19,9 @@ defmodule WarehouseWeb.SessionController do
 
   @spec create(Plug.Conn.t(), map) :: Plug.Conn.t()
   def create(conn, %{"employee" => %{"first_name" => first_name, "password" => password}}) do
-    case first_name |> Sales.get_by_name() |> Authentication.authenticate(password) do
+    {pswd, _} = Integer.parse(password)
+    IO.inspect(pswd)
+    case first_name |> Sales.get_by_name() |> Authentication.authenticate(pswd) do
       {:ok, account} ->
         conn
         |> Authentication.log_in(account)

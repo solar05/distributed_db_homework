@@ -1,15 +1,17 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+      <p>Неправильное число покупаемой одежды.</p>
     </div>
   <% end %>
 
-  <%= label f, :quantity %>
-  <%= number_input f, :quantity %>
-  <%= error_tag f, :quantity %>
+  <div class="form-group">
+    <label for="clothe_in_store_quantity">
+      Количество <%= number_input f, :quantity, class: "form-control" %>
+    </label>
 
-  <div>
-    <%= submit "Save" %>
+    <%= error_tag f, :quantity %>
+    <%= submit "Купить", class: "btn btn-success" %>
   </div>
+
 <% end %>

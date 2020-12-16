@@ -4,8 +4,8 @@ defmodule Warehouse.Sales.ClotheInStore do
 
   schema "clothe_in_store" do
     field :quantity, :integer
-    has_many :clothe_example, Sales.ClotheExample
-    has_many :magazine, Magazine
+    belongs_to :clothe, Warehouse.Sales.ClotheExample
+    belongs_to :magazine, Warehouse.Sales.Magazine
   end
 
   @doc false

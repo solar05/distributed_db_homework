@@ -3,7 +3,7 @@ defmodule Warehouse.Repo.Migrations.AddPswdToEmployee do
 
   def change do
     alter table("employee") do
-      add :password, :string
+      add :password, :integer
     end
   end
 end

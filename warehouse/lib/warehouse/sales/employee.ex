@@ -9,7 +9,7 @@ defmodule Warehouse.Sales.Employee do
     field :last_name, :string
     field :passport_number, :string
     field :phone_number, :string
-    field :password, :string
+    field :password, :integer
     belongs_to :magazine, Warehouse.Sales.Magazine
   end
 

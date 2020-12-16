@@ -232,4 +232,187 @@ defmodule Warehouse.SalesTest do
       assert %Ecto.Changeset{} = Sales.change_magazine(magazine)
     end
   end
+
+  describe "clothe_size" do
+    alias Warehouse.Sales.ClotheSize
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def clothe_size_fixture(attrs \\ %{}) do
+      {:ok, clothe_size} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sales.create_clothe_size()
+
+      clothe_size
+    end
+
+    test "list_clothe_size/0 returns all clothe_size" do
+      clothe_size = clothe_size_fixture()
+      assert Sales.list_clothe_size() == [clothe_size]
+    end
+
+    test "get_clothe_size!/1 returns the clothe_size with given id" do
+      clothe_size = clothe_size_fixture()
+      assert Sales.get_clothe_size!(clothe_size.id) == clothe_size
+    end
+
+    test "create_clothe_size/1 with valid data creates a clothe_size" do
+      assert {:ok, %ClotheSize{} = clothe_size} = Sales.create_clothe_size(@valid_attrs)
+    end
+
+    test "create_clothe_size/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sales.create_clothe_size(@invalid_attrs)
+    end
+
+    test "update_clothe_size/2 with valid data updates the clothe_size" do
+      clothe_size = clothe_size_fixture()
+      assert {:ok, %ClotheSize{} = clothe_size} = Sales.update_clothe_size(clothe_size, @update_attrs)
+    end
+
+    test "update_clothe_size/2 with invalid data returns error changeset" do
+      clothe_size = clothe_size_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sales.update_clothe_size(clothe_size, @invalid_attrs)
+      assert clothe_size == Sales.get_clothe_size!(clothe_size.id)
+    end
+
+    test "delete_clothe_size/1 deletes the clothe_size" do
+      clothe_size = clothe_size_fixture()
+      assert {:ok, %ClotheSize{}} = Sales.delete_clothe_size(clothe_size)
+      assert_raise Ecto.NoResultsError, fn -> Sales.get_clothe_size!(clothe_size.id) end
+    end
+
+    test "change_clothe_size/1 returns a clothe_size changeset" do
+      clothe_size = clothe_size_fixture()
+      assert %Ecto.Changeset{} = Sales.change_clothe_size(clothe_size)
+    end
+  end
+
+  describe "clothe_colour" do
+    alias Warehouse.Sales.ClotheColour
+
+    @valid_attrs %{colour: "some colour"}
+    @update_attrs %{colour: "some updated colour"}
+    @invalid_attrs %{colour: nil}
+
+    def clothe_colour_fixture(attrs \\ %{}) do
+      {:ok, clothe_colour} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sales.create_clothe_colour()
+
+      clothe_colour
+    end
+
+    test "list_clothe_colour/0 returns all clothe_colour" do
+      clothe_colour = clothe_colour_fixture()
+      assert Sales.list_clothe_colour() == [clothe_colour]
+    end
+
+    test "get_clothe_colour!/1 returns the clothe_colour with given id" do
+      clothe_colour = clothe_colour_fixture()
+      assert Sales.get_clothe_colour!(clothe_colour.id) == clothe_colour
+    end
+
+    test "create_clothe_colour/1 with valid data creates a clothe_colour" do
+      assert {:ok, %ClotheColour{} = clothe_colour} = Sales.create_clothe_colour(@valid_attrs)
+      assert clothe_colour.colour == "some colour"
+    end
+
+    test "create_clothe_colour/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sales.create_clothe_colour(@invalid_attrs)
+    end
+
+    test "update_clothe_colour/2 with valid data updates the clothe_colour" do
+      clothe_colour = clothe_colour_fixture()
+      assert {:ok, %ClotheColour{} = clothe_colour} = Sales.update_clothe_colour(clothe_colour, @update_attrs)
+      assert clothe_colour.colour == "some updated colour"
+    end
+
+    test "update_clothe_colour/2 with invalid data returns error changeset" do
+      clothe_colour = clothe_colour_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sales.update_clothe_colour(clothe_colour, @invalid_attrs)
+      assert clothe_colour == Sales.get_clothe_colour!(clothe_colour.id)
+    end
+
+    test "delete_clothe_colour/1 deletes the clothe_colour" do
+      clothe_colour = clothe_colour_fixture()
+      assert {:ok, %ClotheColour{}} = Sales.delete_clothe_colour(clothe_colour)
+      assert_raise Ecto.NoResultsError, fn -> Sales.get_clothe_colour!(clothe_colour.id) end
+    end
+
+    test "change_clothe_colour/1 returns a clothe_colour changeset" do
+      clothe_colour = clothe_colour_fixture()
+      assert %Ecto.Changeset{} = Sales.change_clothe_colour(clothe_colour)
+    end
+  end
+
+  describe "clothe_handbook" do
+    alias Warehouse.Sales.ClotheHandbook
+
+    @valid_attrs %{article: "some article", gender: "some gender", mark: "some mark", price: 42, type: "some type"}
+    @update_attrs %{article: "some updated article", gender: "some updated gender", mark: "some updated mark", price: 43, type: "some updated type"}
+    @invalid_attrs %{article: nil, gender: nil, mark: nil, price: nil, type: nil}
+
+    def clothe_handbook_fixture(attrs \\ %{}) do
+      {:ok, clothe_handbook} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sales.create_clothe_handbook()
+
+      clothe_handbook
+    end
+
+    test "list_clothe_handbook/0 returns all clothe_handbook" do
+      clothe_handbook = clothe_handbook_fixture()
+      assert Sales.list_clothe_handbook() == [clothe_handbook]
+    end
+
+    test "get_clothe_handbook!/1 returns the clothe_handbook with given id" do
+      clothe_handbook = clothe_handbook_fixture()
+      assert Sales.get_clothe_handbook!(clothe_handbook.id) == clothe_handbook
+    end
+
+    test "create_clothe_handbook/1 with valid data creates a clothe_handbook" do
+      assert {:ok, %ClotheHandbook{} = clothe_handbook} = Sales.create_clothe_handbook(@valid_attrs)
+      assert clothe_handbook.article == "some article"
+      assert clothe_handbook.gender == "some gender"
+      assert clothe_handbook.mark == "some mark"
+      assert clothe_handbook.price == 42
+      assert clothe_handbook.type == "some type"
+    end
+
+    test "create_clothe_handbook/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sales.create_clothe_handbook(@invalid_attrs)
+    end
+
+    test "update_clothe_handbook/2 with valid data updates the clothe_handbook" do
+      clothe_handbook = clothe_handbook_fixture()
+      assert {:ok, %ClotheHandbook{} = clothe_handbook} = Sales.update_clothe_handbook(clothe_handbook, @update_attrs)
+      assert clothe_handbook.article == "some updated article"
+      assert clothe_handbook.gender == "some updated gender"
+      assert clothe_handbook.mark == "some updated mark"
+      assert clothe_handbook.price == 43
+      assert clothe_handbook.type == "some updated type"
+    end
+
+    test "update_clothe_handbook/2 with invalid data returns error changeset" do
+      clothe_handbook = clothe_handbook_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sales.update_clothe_handbook(clothe_handbook, @invalid_attrs)
+      assert clothe_handbook == Sales.get_clothe_handbook!(clothe_handbook.id)
+    end
+
+    test "delete_clothe_handbook/1 deletes the clothe_handbook" do
+      clothe_handbook = clothe_handbook_fixture()
+      assert {:ok, %ClotheHandbook{}} = Sales.delete_clothe_handbook(clothe_handbook)
+      assert_raise Ecto.NoResultsError, fn -> Sales.get_clothe_handbook!(clothe_handbook.id) end
+    end
+
+    test "change_clothe_handbook/1 returns a clothe_handbook changeset" do
+      clothe_handbook = clothe_handbook_fixture()
+      assert %Ecto.Changeset{} = Sales.change_clothe_handbook(clothe_handbook)
+    end
+  end
 end

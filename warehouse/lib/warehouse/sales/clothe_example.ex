@@ -3,7 +3,9 @@ defmodule Warehouse.Sales.ClotheExample do
   import Ecto.Changeset
 
   schema "clothe_example" do
-
+    belongs_to :size, Warehouse.Sales.ClotheSize
+    belongs_to :colour, Warehouse.Sales.ClotheColour
+    belongs_to :handbook, Warehouse.Sales.ClotheHandbook
   end
 
   @doc false

@@ -11,7 +11,13 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-  <%= if logged?(@conn) do %>
+      <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav mr-auto">
+                  <%= link("Покупка одежды", to: Routes.clothe_in_store_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                </ul>
+                <span class="navbar-text">
+                      <%= if logged?(@conn) do %>
                     <h2 class="text-dark">
                       Добро пожаловать, <%= current_user(@conn).first_name %>!
                     </h2>
@@ -27,24 +33,20 @@
                       <%= link("Войти", to: Routes.session_path(@conn, :create)) %>
                     </h2>
                   <% end %>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
+                </span>
+            </nav>
     </header>
+
     <main role="main" class="container">
+    <%= if get_flash(@conn, :success) do %>
+      <p class="alert alert-success" role="alert"><%= get_flash(@conn, :success) %></p>
+    <% end %>
+    <%= if get_flash(@conn, :info) do %>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <% end %>
+    <%= if get_flash(@conn, :error) do %>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <% end %>
       <%= @inner_content %>
     </main>
   </body>

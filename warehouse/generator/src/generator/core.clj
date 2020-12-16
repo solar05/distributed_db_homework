@@ -21,7 +21,7 @@
    :clothe_example ["size_id" "colour_id" "handbook_id"]
    :magazine ["city" "street" "house" "inn"]
    :clothe_in_store ["clothe_id" "magazine_id" "quantity"]
-   :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number"]
+   :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number" "password"]
    :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]
    :clothe_sold ["sales_recepeit" "clothe_in_store_id" "quantity"]
    :clothe_order ["employee_id" "magazine_id" "is_ordered" "quantity"]
@@ -127,7 +127,8 @@
               (birth-date-gen)
               (hire-date-gen)
               (str-util (gen/generate (gen/choose 1000000000 9999999999)))
-              (phone-number-gen)]]
+              (phone-number-gen)
+              123]]
     (str "(" (s/join ", " vals) ")")))
 
 (defn recepeit-val []

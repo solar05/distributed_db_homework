@@ -1,10 +1,9 @@
-defmodule Warehouse.ClotheSize do
+defmodule Warehouse.Sales.ClotheSize do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "clothe_size" do
     field :size, :string
-
   end
 
   @doc false

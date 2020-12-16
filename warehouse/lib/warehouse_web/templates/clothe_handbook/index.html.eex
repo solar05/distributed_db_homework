@@ -1,0 +1,34 @@
+<h1>Listing Clothe handbook</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Article</th>
+      <th>Gender</th>
+      <th>Mark</th>
+      <th>Price</th>
+      <th>Type</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for clothe_handbook <- @clothe_handbook do %>
+    <tr>
+      <td><%= clothe_handbook.article %></td>
+      <td><%= clothe_handbook.gender %></td>
+      <td><%= clothe_handbook.mark %></td>
+      <td><%= clothe_handbook.price %></td>
+      <td><%= clothe_handbook.type %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.clothe_handbook_path(@conn, :show, clothe_handbook) %></span>
+        <span><%= link "Edit", to: Routes.clothe_handbook_path(@conn, :edit, clothe_handbook) %></span>
+        <span><%= link "Delete", to: Routes.clothe_handbook_path(@conn, :delete, clothe_handbook), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Clothe handbook", to: Routes.clothe_handbook_path(@conn, :new) %></span>

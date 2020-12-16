@@ -1,0 +1,13 @@
+<h1>Show Clothe colour</h1>
+
+<ul>
+
+  <li>
+    <strong>Colour:</strong>
+    <%= @clothe_colour.colour %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.clothe_colour_path(@conn, :edit, @clothe_colour) %></span>
+<span><%= link "Back", to: Routes.clothe_colour_path(@conn, :index) %></span>

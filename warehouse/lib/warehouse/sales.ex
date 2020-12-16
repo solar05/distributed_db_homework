@@ -115,9 +115,14 @@ defmodule Warehouse.Sales do
   """
   def list_clothe_in_store do
     current_mag = Confex.get_env(:warehouse, :magazine)
-    Repo.all(ClotheInStore)
+    result = from clothe in ClotheInStore,
+     where: clothe.magazine_id == ^current_mag,
+     order_by: clothe.id
+    Repo.all(result)
+    |> Repo.preload([:magazine, clothe: [:colour, :size, :handbook]])
   end
 
+  @spec get_clothe_in_store!(any) :: any
   @doc """
   Gets a single clothe_in_store.
 
@@ -394,5 +399,293 @@ defmodule Warehouse.Sales do
   """
   def change_magazine(%Magazine{} = magazine, attrs \\ %{}) do
     Magazine.changeset(magazine, attrs)
+  end
+
+  alias Warehouse.Sales.ClotheSize
+
+  @doc """
+  Returns the list of clothe_size.
+
+  ## Examples
+
+      iex> list_clothe_size()
+      [%ClotheSize{}, ...]
+
+  """
+  def list_clothe_size do
+    Repo.all(ClotheSize)
+  end
+
+  @doc """
+  Gets a single clothe_size.
+
+  Raises `Ecto.NoResultsError` if the Clothe size does not exist.
+
+  ## Examples
+
+      iex> get_clothe_size!(123)
+      %ClotheSize{}
+
+      iex> get_clothe_size!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clothe_size!(id), do: Repo.get!(ClotheSize, id)
+
+  @doc """
+  Creates a clothe_size.
+
+  ## Examples
+
+      iex> create_clothe_size(%{field: value})
+      {:ok, %ClotheSize{}}
+
+      iex> create_clothe_size(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_clothe_size(attrs \\ %{}) do
+    %ClotheSize{}
+    |> ClotheSize.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a clothe_size.
+
+  ## Examples
+
+      iex> update_clothe_size(clothe_size, %{field: new_value})
+      {:ok, %ClotheSize{}}
+
+      iex> update_clothe_size(clothe_size, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_clothe_size(%ClotheSize{} = clothe_size, attrs) do
+    clothe_size
+    |> ClotheSize.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a clothe_size.
+
+  ## Examples
+
+      iex> delete_clothe_size(clothe_size)
+      {:ok, %ClotheSize{}}
+
+      iex> delete_clothe_size(clothe_size)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clothe_size(%ClotheSize{} = clothe_size) do
+    Repo.delete(clothe_size)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking clothe_size changes.
+
+  ## Examples
+
+      iex> change_clothe_size(clothe_size)
+      %Ecto.Changeset{data: %ClotheSize{}}
+
+  """
+  def change_clothe_size(%ClotheSize{} = clothe_size, attrs \\ %{}) do
+    ClotheSize.changeset(clothe_size, attrs)
+  end
+
+  alias Warehouse.Sales.ClotheColour
+
+  @doc """
+  Returns the list of clothe_colour.
+
+  ## Examples
+
+      iex> list_clothe_colour()
+      [%ClotheColour{}, ...]
+
+  """
+  def list_clothe_colour do
+    Repo.all(ClotheColour)
+  end
+
+  @doc """
+  Gets a single clothe_colour.
+
+  Raises `Ecto.NoResultsError` if the Clothe colour does not exist.
+
+  ## Examples
+
+      iex> get_clothe_colour!(123)
+      %ClotheColour{}
+
+      iex> get_clothe_colour!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clothe_colour!(id), do: Repo.get!(ClotheColour, id)
+
+  @doc """
+  Creates a clothe_colour.
+
+  ## Examples
+
+      iex> create_clothe_colour(%{field: value})
+      {:ok, %ClotheColour{}}
+
+      iex> create_clothe_colour(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_clothe_colour(attrs \\ %{}) do
+    %ClotheColour{}
+    |> ClotheColour.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a clothe_colour.
+
+  ## Examples
+
+      iex> update_clothe_colour(clothe_colour, %{field: new_value})
+      {:ok, %ClotheColour{}}
+
+      iex> update_clothe_colour(clothe_colour, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_clothe_colour(%ClotheColour{} = clothe_colour, attrs) do
+    clothe_colour
+    |> ClotheColour.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a clothe_colour.
+
+  ## Examples
+
+      iex> delete_clothe_colour(clothe_colour)
+      {:ok, %ClotheColour{}}
+
+      iex> delete_clothe_colour(clothe_colour)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clothe_colour(%ClotheColour{} = clothe_colour) do
+    Repo.delete(clothe_colour)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking clothe_colour changes.
+
+  ## Examples
+
+      iex> change_clothe_colour(clothe_colour)
+      %Ecto.Changeset{data: %ClotheColour{}}
+
+  """
+  def change_clothe_colour(%ClotheColour{} = clothe_colour, attrs \\ %{}) do
+    ClotheColour.changeset(clothe_colour, attrs)
+  end
+
+  alias Warehouse.Sales.ClotheHandbook
+
+  @doc """
+  Returns the list of clothe_handbook.
+
+  ## Examples
+
+      iex> list_clothe_handbook()
+      [%ClotheHandbook{}, ...]
+
+  """
+  def list_clothe_handbook do
+    Repo.all(ClotheHandbook)
+  end
+
+  @doc """
+  Gets a single clothe_handbook.
+
+  Raises `Ecto.NoResultsError` if the Clothe handbook does not exist.
+
+  ## Examples
+
+      iex> get_clothe_handbook!(123)
+      %ClotheHandbook{}
+
+      iex> get_clothe_handbook!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clothe_handbook!(id), do: Repo.get!(ClotheHandbook, id)
+
+  @doc """
+  Creates a clothe_handbook.
+
+  ## Examples
+
+      iex> create_clothe_handbook(%{field: value})
+      {:ok, %ClotheHandbook{}}
+
+      iex> create_clothe_handbook(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_clothe_handbook(attrs \\ %{}) do
+    %ClotheHandbook{}
+    |> ClotheHandbook.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a clothe_handbook.
+
+  ## Examples
+
+      iex> update_clothe_handbook(clothe_handbook, %{field: new_value})
+      {:ok, %ClotheHandbook{}}
+
+      iex> update_clothe_handbook(clothe_handbook, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_clothe_handbook(%ClotheHandbook{} = clothe_handbook, attrs) do
+    clothe_handbook
+    |> ClotheHandbook.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a clothe_handbook.
+
+  ## Examples
+
+      iex> delete_clothe_handbook(clothe_handbook)
+      {:ok, %ClotheHandbook{}}
+
+      iex> delete_clothe_handbook(clothe_handbook)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clothe_handbook(%ClotheHandbook{} = clothe_handbook) do
+    Repo.delete(clothe_handbook)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking clothe_handbook changes.
+
+  ## Examples
+
+      iex> change_clothe_handbook(clothe_handbook)
+      %Ecto.Changeset{data: %ClotheHandbook{}}
+
+  """
+  def change_clothe_handbook(%ClotheHandbook{} = clothe_handbook, attrs \\ %{}) do
+    ClotheHandbook.changeset(clothe_handbook, attrs)
   end
 end

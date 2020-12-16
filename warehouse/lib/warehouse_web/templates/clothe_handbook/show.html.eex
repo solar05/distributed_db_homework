@@ -1,0 +1,33 @@
+<h1>Show Clothe handbook</h1>
+
+<ul>
+
+  <li>
+    <strong>Article:</strong>
+    <%= @clothe_handbook.article %>
+  </li>
+
+  <li>
+    <strong>Gender:</strong>
+    <%= @clothe_handbook.gender %>
+  </li>
+
+  <li>
+    <strong>Mark:</strong>
+    <%= @clothe_handbook.mark %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @clothe_handbook.price %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @clothe_handbook.type %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.clothe_handbook_path(@conn, :edit, @clothe_handbook) %></span>
+<span><%= link "Back", to: Routes.clothe_handbook_path(@conn, :index) %></span>

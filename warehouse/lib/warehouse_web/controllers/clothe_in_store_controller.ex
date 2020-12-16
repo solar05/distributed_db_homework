@@ -43,7 +43,7 @@ defmodule WarehouseWeb.ClotheInStoreController do
     case Sales.update_clothe_in_store(clothe_in_store, clothe_in_store_params) do
       {:ok, clothe_in_store} ->
         conn
-        |> put_flash(:info, "Clothe in store updated successfully.")
+        |> put_flash(:success, "Успешно куплено!")
         |> redirect(to: Routes.clothe_in_store_path(conn, :show, clothe_in_store))
 
       {:error, %Ecto.Changeset{} = changeset} ->
