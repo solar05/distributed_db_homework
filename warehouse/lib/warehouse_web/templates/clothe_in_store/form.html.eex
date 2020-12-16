@@ -4,10 +4,10 @@
       <p>Неправильное число покупаемой одежды.</p>
     </div>
   <% end %>
-
+  <div class="text-xl-left font-weight-bold">В наличии: <%= @clothe_in_store.quantity %>.</div>
   <div class="form-group">
     <label for="clothe_in_store_quantity">
-      Количество <%= number_input f, :quantity, class: "form-control" %>
+      Количество <%= number_input f, :quantity, class: "form-control", value: 0 %>
     </label>
 
     <%= error_tag f, :quantity %>

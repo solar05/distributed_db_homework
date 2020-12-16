@@ -6,6 +6,7 @@ defmodule WarehouseWeb.Sales.EmployeeController do
 
   def index(conn, _params) do
     employee = Sales.list_employee()
+    IO.inspect(employee)
     render(conn, "index.html", employee: employee)
   end
 

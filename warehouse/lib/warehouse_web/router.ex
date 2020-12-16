@@ -28,11 +28,13 @@ defmodule WarehouseWeb.Router do
     resources "/clothes", ClotheInStoreController
     get "/login", SessionController, :new
     post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
   end
 
-  scope "/admin", WarehouseWeb do
+  scope "/admin", WarehouseWeb.Sales do
     pipe_through [:browser, :guardian, :browser_auth]
-    delete "/logout", SessionController, :delete
+    resources "/magazines", MagazineController, only: [:index]
+    resources "/employee", EmployeeController, only: [:index]
   end
 
   # Other scopes may use custom stacks.

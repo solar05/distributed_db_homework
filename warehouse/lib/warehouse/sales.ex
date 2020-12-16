@@ -170,8 +170,10 @@ defmodule Warehouse.Sales do
 
   """
   def update_clothe_in_store(%ClotheInStore{} = clothe_in_store, attrs) do
+    {quantity, _} =  Integer.parse(Map.get(attrs, "quantity"))
+    diff = clothe_in_store.quantity - quantity
     clothe_in_store
-    |> ClotheInStore.changeset(attrs)
+    |> ClotheInStore.changeset(%{"quantity" => diff})
     |> Repo.update()
   end
 
@@ -217,6 +219,7 @@ defmodule Warehouse.Sales do
   """
   def list_employee do
     Repo.all(Employee)
+    |> Repo.preload([:magazine])
   end
 
   @doc """
@@ -687,5 +690,10 @@ defmodule Warehouse.Sales do
   """
   def change_clothe_handbook(%ClotheHandbook{} = clothe_handbook, attrs \\ %{}) do
     ClotheHandbook.changeset(clothe_handbook, attrs)
+  end
+
+  def current_magazine?(mag_id) do
+    current_mag = Confex.get_env(:warehouse, :magazine)
+    mag_id == current_mag
   end
 end

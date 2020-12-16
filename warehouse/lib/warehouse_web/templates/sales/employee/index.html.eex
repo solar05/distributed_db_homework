@@ -1,24 +1,38 @@
-<h1>Listing Employee</h1>
+<h3>Список сотрудников</h1>
+<br>ф
 
-<table>
+<table class="table">
   <thead>
     <tr>
-
-      <th></th>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th>Дата рождения</th>
+      <th>Дата наема</th>
+      <th>Номер паспорта</th>
+      <th>Номер телефона</th>
     </tr>
   </thead>
   <tbody>
 <%= for employee <- @employee do %>
-    <tr>
-
-      <td>
-        <span><%= link "Show", to: Routes.sales_employee_path(@conn, :show, employee) %></span>
-        <span><%= link "Edit", to: Routes.sales_employee_path(@conn, :edit, employee) %></span>
-        <span><%= link "Delete", to: Routes.sales_employee_path(@conn, :delete, employee), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
+  <%= if current_magazine?(employee.magazine.id) do %>
+    <tr class="bg-success text-white">
+        <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.birth_date %></td>
+        <td><%= employee.hire_date %></td>
+        <td><%= employee.passport_number %></td>
+        <td><%= employee.phone_number %></td>
+      </tr>
+  <% else %>
+      <tr>
+        <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.birth_date %></td>
+        <td><%= employee.hire_date %></td>
+        <td><%= employee.passport_number %></td>
+        <td><%= employee.phone_number %></td>
+      </tr>
+  <% end %>
 <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Employee", to: Routes.sales_employee_path(@conn, :new) %></span>

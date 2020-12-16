@@ -15,9 +15,13 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <ul class="navbar-nav mr-auto">
                   <%= link("Покупка одежды", to: Routes.clothe_in_store_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                  <%= if logged?(@conn) do %>
+                    <%= link("Магазины", to: Routes.magazine_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                    <%= link("Сотрудники", to: Routes.employee_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                  <% end %>
                 </ul>
                 <span class="navbar-text">
-                      <%= if logged?(@conn) do %>
+                    <%= if logged?(@conn) do %>
                     <h2 class="text-dark">
                       Добро пожаловать, <%= current_user(@conn).first_name %>!
                     </h2>
