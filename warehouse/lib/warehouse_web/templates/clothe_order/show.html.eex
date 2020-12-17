@@ -59,7 +59,7 @@
 
   <li class="list-group-item">
     <strong>Количество товара:</strong>
-    <%= @clothe_order.quantity %>
+    <%= @clothe_order.quantity %> 
   </li>
 
 </ul>

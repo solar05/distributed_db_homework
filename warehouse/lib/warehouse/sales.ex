@@ -234,8 +234,17 @@ defmodule Warehouse.Sales do
 
   """
   def list_employee do
-    Repo.all(Employee)
-    |> Repo.preload([:magazine, :position])
+    current_mag = Confex.get_env(:warehouse, :magazine)
+    if current_mag == 1 do
+      Repo.all(Employee)
+      |> Repo.preload([:magazine, :position])
+    else
+      query = from employee in Employee,
+      where: employee.magazine_id == ^current_mag,
+      order_by: employee.id
+      Repo.all(query)
+      |> Repo.preload([:magazine, :position])
+    end
   end
 
   def list_employees_id() do

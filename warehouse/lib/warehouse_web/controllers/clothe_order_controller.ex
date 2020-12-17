@@ -41,11 +41,12 @@ defmodule WarehouseWeb.ClotheOrderController do
   #  end
   #end
 
-  
+
 
   def show(conn, %{"id" => id}) do
     clothe_order = Sales.get_clothe_order!(id)
-    render(conn, "show.html", clothe_order: clothe_order)
+    changeset = Sales.change_clothe_order(clothe_order)
+    render(conn, "show.html", clothe_order: clothe_order, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do

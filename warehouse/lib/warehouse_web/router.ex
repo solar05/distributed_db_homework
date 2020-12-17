@@ -32,6 +32,11 @@ defmodule WarehouseWeb.Router do
     resources "/checks", SalesRecepeitController, only: [:index, :show]
   end
 
+  scope "/api", WarehouseWeb.Api, as: :api do
+    pipe_through :api
+    get "/orders/:id/:clothe/:employee", ClotheOrderController, :order
+  end
+
   scope "/admin", WarehouseWeb.Sales do
     pipe_through [:browser, :guardian, :browser_auth]
     resources "/magazines", MagazineController, only: [:index]
