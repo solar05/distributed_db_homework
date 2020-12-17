@@ -4,7 +4,8 @@ defmodule WarehouseWeb.ClotheInStoreController do
   alias Warehouse.Sales
   alias Warehouse.Sales.ClotheInStore
   alias Warehouse.Sales.SalesRecepeit
-  alias Ecto.Repo
+  alias Warehouse.Sales.ClotheOrder
+
 
   def index(conn, _params) do
     clothe_in_store = Sales.list_clothe_in_store()
@@ -62,6 +63,19 @@ defmodule WarehouseWeb.ClotheInStoreController do
           cashbox_num: :rand.uniform(100))
 
         sales_recepeit = Sales.create_sales!(recepeit)
+
+        if diff <= 5 and Sales.clothe_orders_exists?(clothe_in_store.clothe_id) do
+          order = Ecto.Changeset.change(%ClotheOrder{},
+            order_date: curr_date,
+            employee_id: employee.id,
+            magazine_id: current_mag.id,
+            quantity: 20,
+            state: "created",
+            clothe_id: clothe_in_store.clothe.id
+          )
+          Sales.create_order!(order)
+        end
+
         conn
             |> put_flash(:success, "Успешно куплено!")
             |> redirect(to: Routes.sales_recepeit_path(conn, :show, sales_recepeit))

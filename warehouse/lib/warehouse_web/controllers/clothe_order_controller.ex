@@ -9,37 +9,39 @@ defmodule WarehouseWeb.ClotheOrderController do
     render(conn, "index.html", clothe_order: clothe_order)
   end
 
-  def new(conn, %{"id" => id}) do
-    clothe_order = Sales.get_clothe_order!(id)
-    case Sales.update_clothe_order(clothe_order, %{"state" => "ordered"}) do
-      {:ok, clothe_order} ->
-        conn
-        |> put_flash(:success, "Заказ подтвержден!")
-        |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
+  #def new(conn, %{"id" => id}) do
+    #clothe_order = Sales.get_clothe_order!(id)
+    #case Sales.update_clothe_order(clothe_order, %{"state" => "ordered"}) do
+    #  {:ok, clothe_order} ->
+   #     conn
+  #      |> put_flash(:success, "Заказ подтвержден!")
+ #       |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
+#
+  #    {:error, %Ecto.Changeset{} = changeset} ->
+  #      IO.inspect(changeset)
+  #      conn
+  #      |> put_flash(:error, "Произошла ошибка!")
+  #      |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
+  #  end
+  #end
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
-        conn
-        |> put_flash(:error, "Произошла ошибка!")
-        |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-    end
-  end
+  #def create(conn, %{"id" => id}) do
+    #clothe_order = Sales.get_clothe_order!(id)
+    #case Sales.update_clothe_order(clothe_order, %{"state" => "ordered"}) do
+    #  {:ok, clothe_order} ->
+   #     conn
+  #      |> put_flash(:success, "Заказ подтвержден!")
+ #       |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
+#
+  #    {:error, %Ecto.Changeset{} = changeset} ->
+  #      IO.inspect(changeset)
+  #      conn
+  #      |> put_flash(:error, "Произошла ошибка!")
+  #      |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
+  #  end
+  #end
 
-  def create(conn, %{"id" => id}) do
-    clothe_order = Sales.get_clothe_order!(id)
-    case Sales.update_clothe_order(clothe_order, %{"state" => "ordered"}) do
-      {:ok, clothe_order} ->
-        conn
-        |> put_flash(:success, "Заказ подтвержден!")
-        |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
-        conn
-        |> put_flash(:error, "Произошла ошибка!")
-        |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-    end
-  end
+  
 
   def show(conn, %{"id" => id}) do
     clothe_order = Sales.get_clothe_order!(id)
@@ -50,6 +52,11 @@ defmodule WarehouseWeb.ClotheOrderController do
     clothe_order = Sales.get_clothe_order!(id)
     case Sales.update_clothe_order(clothe_order, %{"state" => "delivered"}) do
       {:ok, clothe_order} ->
+        current_mag = Confex.get_env(:warehouse, :magazine)
+        if (current_mag == clothe_order.magazine_id) do
+          Sales.refill_clothe_in_store(clothe_order.clothe_id, clothe_order.quantity)
+        end
+
         conn
         |> put_flash(:success, "Заказ выполнен!")
         |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))

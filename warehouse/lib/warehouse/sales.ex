@@ -178,6 +178,16 @@ defmodule Warehouse.Sales do
     |> Repo.update()
   end
 
+  def refill_clothe_in_store(clothe_id, quantity) do
+    current_mag = Confex.get_env(:warehouse, :magazine)
+    query = from clothe in ClotheInStore,
+     where: clothe.magazine_id == ^current_mag and clothe.clothe_id == ^clothe_id,
+     limit: 1
+    result = List.first(Repo.all(query))
+    ClotheInStore.changeset(result, %{"quantity" => result.quantity + quantity})
+    |> Repo.update()
+  end
+
   def get_clothe_in_store_info(id) do
     Repo.get!(ClotheInStore, id)
     |> Repo.preload([clothe: [:handbook]])
@@ -772,6 +782,10 @@ defmodule Warehouse.Sales do
     Repo.insert!(changeset)
   end
 
+  def create_order!(changeset) do
+    Repo.insert!(changeset)
+  end
+
   @doc """
   Updates a sales_recepeit.
 
@@ -852,6 +866,14 @@ defmodule Warehouse.Sales do
   def get_clothe_order!(id) do
     Repo.get!(ClotheOrder, id)
     |> Repo.preload([:magazine, :employee, clothe: [:colour, :size, :handbook]])
+  end
+
+  def clothe_orders_exists?(clothe_id) do
+    current_mag = Confex.get_env(:warehouse, :magazine)
+    result = from orders in ClotheOrder,
+     where: orders.magazine_id == ^current_mag and orders.state == "created" and orders.clothe_id == ^clothe_id
+    Repo.all(result)
+    |> Enum.empty?()
   end
 
   @doc """
