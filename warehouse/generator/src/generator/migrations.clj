@@ -33,10 +33,7 @@
   "CREATE TABLE sales_recepeit (sales_recepeit serial PRIMARY KEY, employee_id int, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), clothe_in_store_id int, FOREIGN KEY (clothe_in_store_id) REFERENCES clothe_in_store (clothe_in_store_id), sum int NOT NULL, sold_date DATE, quantity int NOT NULL, cashbox_num int NOT NULL);")
 
 (def clothe-order
-  "CREATE TABLE clothe_order (clothe_order_id serial PRIMARY KEY, employee_id int, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), is_ordered boolean NOT NULL, quantity int NOT NULL);")
-
-(def clothe-ordered-list
-  "CREATE TABLE clothe_order_list (clothe_ordered_list serial PRIMARY KEY, clothe_order_id int, FOREIGN KEY (clothe_order_id) REFERENCES clothe_order (clothe_order_id), clothe_id int, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), order_date DATE);")
+  "CREATE TABLE clothe_order (clothe_order_id serial PRIMARY KEY, employee_id int, FOREIGN KEY (employee_id) REFERENCES employee (employee_id), magazine_id int, FOREIGN KEY (magazine_id) REFERENCES magazine (magazine_id), clothe_id int, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), order_date DATE NOT NULL, state varchar(30) NOT NULL, quantity int NOT NULL);")
 
 (def clothe-in-stock
   "CREATE TABLE clothe_in_stock (clothe_in_stock_id serial PRIMARY KEY, clothe_id int, FOREIGN KEY (clothe_id) REFERENCES clothe_example (clothe_id), quantity int NOT NULL, place int NOT NULL);")
@@ -54,6 +51,5 @@
              employee
              sales-recepeit
              clothe-order
-             clothe-ordered-list
              clothe-in-stock
              clothe-supplied])

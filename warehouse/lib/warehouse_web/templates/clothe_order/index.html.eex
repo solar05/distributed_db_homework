@@ -1,0 +1,40 @@
+<h3>Заказы одежды</h3>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Магазин</th>
+      <th>Кто заказал</th>
+      <th>Артикул</th>
+      <th>Дата заказа</th>
+      <th>Состояние заказа</th>
+      <th>Количество</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for clothe_order <- @clothe_order do %>
+    <tr>
+      <td><%= clothe_order.magazine.id %>
+      <td><%= clothe_order.employee.first_name <> " " <> clothe_order.employee.last_name %></td>
+      <td><%= clothe_order.clothe.handbook.article %></td>
+      <td><%= clothe_order.order_date %></td>
+      <%= case clothe_order.state do %>
+        <% "created" -> %>
+          <%= content_tag :td, "Создан", class: "text-primary" %>
+        <% "ordered" -> %>
+          <%= content_tag :td, "Заказан", class: "text-secondary" %>
+        <% "delivered" -> %>
+          <%= content_tag :td, "Выполнен", class: "text-success" %>
+      <% end %>
+      <td><%= clothe_order.quantity %></td>
+
+      <td>
+        <span><%= link "Просмотр заказа", to: Routes.clothe_order_path(@conn, :show, clothe_order) %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

@@ -225,7 +225,7 @@ defmodule Warehouse.Sales do
   """
   def list_employee do
     Repo.all(Employee)
-    |> Repo.preload([:magazine])
+    |> Repo.preload([:magazine, :position])
   end
 
   def list_employees_id() do
@@ -817,5 +817,105 @@ defmodule Warehouse.Sales do
   """
   def change_sales_recepeit(%SalesRecepeit{} = sales_recepeit, attrs \\ %{}) do
     SalesRecepeit.changeset(sales_recepeit, attrs)
+  end
+
+  alias Warehouse.Sales.ClotheOrder
+
+  @doc """
+  Returns the list of clothe_order.
+
+  ## Examples
+
+      iex> list_clothe_order()
+      [%ClotheOrder{}, ...]
+
+  """
+  def list_clothe_order do
+    Repo.all(ClotheOrder)
+    |> Repo.preload([:magazine, :employee, clothe: [:colour, :size, :handbook]])
+  end
+
+  @doc """
+  Gets a single clothe_order.
+
+  Raises `Ecto.NoResultsError` if the Clothe order does not exist.
+
+  ## Examples
+
+      iex> get_clothe_order!(123)
+      %ClotheOrder{}
+
+      iex> get_clothe_order!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clothe_order!(id) do
+    Repo.get!(ClotheOrder, id)
+    |> Repo.preload([:magazine, :employee, clothe: [:colour, :size, :handbook]])
+  end
+
+  @doc """
+  Creates a clothe_order.
+
+  ## Examples
+
+      iex> create_clothe_order(%{field: value})
+      {:ok, %ClotheOrder{}}
+
+      iex> create_clothe_order(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_clothe_order(attrs \\ %{}) do
+    %ClotheOrder{}
+    |> ClotheOrder.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a clothe_order.
+
+  ## Examples
+
+      iex> update_clothe_order(clothe_order, %{field: new_value})
+      {:ok, %ClotheOrder{}}
+
+      iex> update_clothe_order(clothe_order, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_clothe_order(%ClotheOrder{} = clothe_order, attrs) do
+    clothe_order
+    |> ClotheOrder.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a clothe_order.
+
+  ## Examples
+
+      iex> delete_clothe_order(clothe_order)
+      {:ok, %ClotheOrder{}}
+
+      iex> delete_clothe_order(clothe_order)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clothe_order(%ClotheOrder{} = clothe_order) do
+    Repo.delete(clothe_order)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking clothe_order changes.
+
+  ## Examples
+
+      iex> change_clothe_order(clothe_order)
+      %Ecto.Changeset{data: %ClotheOrder{}}
+
+  """
+  def change_clothe_order(%ClotheOrder{} = clothe_order, attrs \\ %{}) do
+    ClotheOrder.changeset(clothe_order, attrs)
   end
 end

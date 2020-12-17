@@ -23,8 +23,7 @@
    :clothe_in_store ["clothe_id" "magazine_id" "quantity"]
    :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number" "password"]
    :sales_recepeit ["employee_id" "magazine_id" "clothe_in_store_id" "sum" "sold_date" "quantity" "cashbox_num"]
-   :clothe_order ["employee_id" "magazine_id" "is_ordered" "quantity"]
-   :clothe_order_list ["clothe_order_id" "clothe_id" "order_date"]
+   :clothe_order ["employee_id" "magazine_id" "clothe_id" "order_date" "state" "quantity"]
    :clothe_in_stock ["clothe_id" "quantity" "place"]
    :clothe_supplied ["clothe_in_stock_id" "clothe_order_id" "arrive_date" "quantity"]})
 
@@ -149,14 +148,10 @@
 (defn clothe-order-val []
   (let [vals [(gen/generate (gen/choose 1 20))
               (gen/generate (gen/choose 1 5))
-              (gen/generate gen/boolean)
-              (gen/generate (gen/choose 15 25))]]
-    (str "(" (s/join ", " vals) ")")))
-
-(defn clothe-order-list-val []
-  (let [vals [(gen/generate (gen/choose 1 15))
               (gen/generate (gen/choose 1 30))
-              (sold-date-gen)]]
+              (arrive-date-gen)
+              (str-util (gen/generate (gen/elements ["created" "ordered" "delivered"])))
+              (gen/generate (gen/choose 15 25))]]
     (str "(" (s/join ", " vals) ")")))
 
 (defn clothe-in-stock-val []
@@ -202,7 +197,6 @@
    (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
    (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 30 recepeit-val)
    (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
-   (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)
    (complex-gen "clothe_in_stock" (:clothe_in_stock tables-fileds) 20 clothe-in-stock-val)
    (complex-gen "clothe_supplied" (:clothe_supplied tables-fileds) 50 clothe-supplied-val)])
 

@@ -10,6 +10,8 @@
       <th>Дата наема</th>
       <th>Номер паспорта</th>
       <th>Номер телефона</th>
+      <th>Должность</th>
+      <th>Зарплата</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,8 @@
         <td><%= employee.hire_date %></td>
         <td><%= employee.passport_number %></td>
         <td><%= employee.phone_number %></td>
+        <td><%= employee.position.position_name %></td>
+        <td><%= employee.position.position_salary %></td>
       </tr>
   <% else %>
       <tr>
@@ -31,6 +35,8 @@
         <td><%= employee.hire_date %></td>
         <td><%= employee.passport_number %></td>
         <td><%= employee.phone_number %></td>
+        <td><%= employee.position.position_name %></td>
+        <td><%= employee.position.position_salary %></td>
       </tr>
   <% end %>
 <% end %>

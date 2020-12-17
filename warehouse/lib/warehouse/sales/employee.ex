@@ -11,6 +11,7 @@ defmodule Warehouse.Sales.Employee do
     field :phone_number, :string
     field :password, :integer
     belongs_to :magazine, Warehouse.Sales.Magazine
+    belongs_to :position, Warehouse.EmployeePosition
   end
 
   @doc false

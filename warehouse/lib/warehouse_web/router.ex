@@ -38,6 +38,11 @@ defmodule WarehouseWeb.Router do
     resources "/employee", EmployeeController, only: [:index]
   end
 
+  scope "/admin", WarehouseWeb do
+    pipe_through [:browser, :guardian, :browser_auth]
+    resources "/orders", ClotheOrderController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", WarehouseWeb do
   #   pipe_through :api

@@ -480,4 +480,67 @@ defmodule Warehouse.SalesTest do
       assert %Ecto.Changeset{} = Sales.change_sales_recepeit(sales_recepeit)
     end
   end
+
+  describe "clothe_order" do
+    alias Warehouse.Sales.ClotheOrder
+
+    @valid_attrs %{order_date: ~D[2010-04-17], quantity: 42, state: "some state"}
+    @update_attrs %{order_date: ~D[2011-05-18], quantity: 43, state: "some updated state"}
+    @invalid_attrs %{order_date: nil, quantity: nil, state: nil}
+
+    def clothe_order_fixture(attrs \\ %{}) do
+      {:ok, clothe_order} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sales.create_clothe_order()
+
+      clothe_order
+    end
+
+    test "list_clothe_order/0 returns all clothe_order" do
+      clothe_order = clothe_order_fixture()
+      assert Sales.list_clothe_order() == [clothe_order]
+    end
+
+    test "get_clothe_order!/1 returns the clothe_order with given id" do
+      clothe_order = clothe_order_fixture()
+      assert Sales.get_clothe_order!(clothe_order.id) == clothe_order
+    end
+
+    test "create_clothe_order/1 with valid data creates a clothe_order" do
+      assert {:ok, %ClotheOrder{} = clothe_order} = Sales.create_clothe_order(@valid_attrs)
+      assert clothe_order.order_date == ~D[2010-04-17]
+      assert clothe_order.quantity == 42
+      assert clothe_order.state == "some state"
+    end
+
+    test "create_clothe_order/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sales.create_clothe_order(@invalid_attrs)
+    end
+
+    test "update_clothe_order/2 with valid data updates the clothe_order" do
+      clothe_order = clothe_order_fixture()
+      assert {:ok, %ClotheOrder{} = clothe_order} = Sales.update_clothe_order(clothe_order, @update_attrs)
+      assert clothe_order.order_date == ~D[2011-05-18]
+      assert clothe_order.quantity == 43
+      assert clothe_order.state == "some updated state"
+    end
+
+    test "update_clothe_order/2 with invalid data returns error changeset" do
+      clothe_order = clothe_order_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sales.update_clothe_order(clothe_order, @invalid_attrs)
+      assert clothe_order == Sales.get_clothe_order!(clothe_order.id)
+    end
+
+    test "delete_clothe_order/1 deletes the clothe_order" do
+      clothe_order = clothe_order_fixture()
+      assert {:ok, %ClotheOrder{}} = Sales.delete_clothe_order(clothe_order)
+      assert_raise Ecto.NoResultsError, fn -> Sales.get_clothe_order!(clothe_order.id) end
+    end
+
+    test "change_clothe_order/1 returns a clothe_order changeset" do
+      clothe_order = clothe_order_fixture()
+      assert %Ecto.Changeset{} = Sales.change_clothe_order(clothe_order)
+    end
+  end
 end

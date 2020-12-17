@@ -19,6 +19,7 @@
                   <%= if logged?(@conn) do %>
                     <%= link("Магазины", to: Routes.magazine_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
                     <%= link("Сотрудники", to: Routes.employee_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                    <%= link("Заказы одежды", to: Routes.clothe_order_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
                   <% end %>
                 </ul>
                 <span class="navbar-text">
