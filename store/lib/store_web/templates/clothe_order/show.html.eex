@@ -59,7 +59,7 @@
 
   <li class="list-group-item">
     <strong>Количество товара:</strong>
-    <%= @clothe_order.quantity %> 
+    <%= @clothe_order.quantity %>
   </li>
 
 </ul>
@@ -68,5 +68,5 @@
   <span><%= link "Подтвердить заказ", to: Routes.clothe_order_path(@conn, :delete, @clothe_order), method: :delete, class: "btn btn-primary" %></span>
 <% end %>
 <%= if @clothe_order.state == "ordered" do %>
-  <span><%= link "Завершить заказ", to: Routes.clothe_order_path(@conn, :edit, @clothe_order), class: "btn btn-success" %></span>
+  <span class="btn btn-secondary">Ожидается поставка от магазина.</span>
 <% end %>
