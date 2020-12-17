@@ -22,8 +22,7 @@
    :magazine ["city" "street" "house" "inn"]
    :clothe_in_store ["clothe_id" "magazine_id" "quantity"]
    :employee ["magazine_id" "position_id" "first_name" "last_name" "birth_date" "hire_date" "passport_number" "phone_number" "password"]
-   :sales_recepeit ["employee_id" "magazine_id" "sum" "sold_date" "cashbox_num"]
-   :clothe_sold ["sales_recepeit" "clothe_in_store_id" "quantity"]
+   :sales_recepeit ["employee_id" "magazine_id" "clothe_in_store_id" "sum" "sold_date" "quantity" "cashbox_num"]
    :clothe_order ["employee_id" "magazine_id" "is_ordered" "quantity"]
    :clothe_order_list ["clothe_order_id" "clothe_id" "order_date"]
    :clothe_in_stock ["clothe_id" "quantity" "place"]
@@ -134,8 +133,10 @@
 (defn recepeit-val []
   (let [vals [(gen/generate (gen/choose 1 20))
               (gen/generate (gen/choose 1 5))
+              (gen/generate (gen/choose 1 30))
               (gen/generate (gen/choose 500 15000))
               (sold-date-gen)
+              (gen/generate (gen/choose 1 5))
               (gen/generate (gen/choose 10 99))]]
     (str "(" (s/join ", " vals) ")")))
 
@@ -199,8 +200,7 @@
    (complex-gen "magazine" (:magazine tables-fileds) 5 magazine-example-val)
    (complex-gen "clothe_in_store" (:clothe_in_store tables-fileds) 30 clothe-in-mag-val)
    (complex-gen "employee" (:employee tables-fileds) 20 employee-val)
-   (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 50 recepeit-val)
-   (complex-gen "clothe_sold_list" (:clothe_sold tables-fileds) 30 clothe-sold-val)
+   (complex-gen "sales_recepeit" (:sales_recepeit tables-fileds) 30 recepeit-val)
    (complex-gen "clothe_order" (:clothe_order tables-fileds) 15 clothe-order-val)
    (complex-gen "clothe_order_list" (:clothe_order_list tables-fileds) 5 clothe-order-list-val)
    (complex-gen "clothe_in_stock" (:clothe_in_stock tables-fileds) 20 clothe-in-stock-val)

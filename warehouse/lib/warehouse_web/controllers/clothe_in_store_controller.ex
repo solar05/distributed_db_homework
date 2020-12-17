@@ -3,6 +3,8 @@ defmodule WarehouseWeb.ClotheInStoreController do
 
   alias Warehouse.Sales
   alias Warehouse.Sales.ClotheInStore
+  alias Warehouse.Sales.SalesRecepeit
+  alias Ecto.Repo
 
   def index(conn, _params) do
     clothe_in_store = Sales.list_clothe_in_store()
@@ -39,14 +41,33 @@ defmodule WarehouseWeb.ClotheInStoreController do
 
   def update(conn, %{"id" => id, "clothe_in_store" => clothe_in_store_params}) do
     clothe_in_store = Sales.get_clothe_in_store!(id)
+    {quantity, _} =  Integer.parse(Map.get(clothe_in_store_params, "quantity"))
+    diff = clothe_in_store.quantity - quantity
 
-    case Sales.update_clothe_in_store(clothe_in_store, clothe_in_store_params) do
+    case Sales.update_clothe_in_store(clothe_in_store, diff) do
       {:ok, clothe_in_store} ->
+        {{year, month, date}, _} = :calendar.local_time
+        curr_date = Date.from_iso8601!("#{year}-#{month}-#{date}")
+        price = Sales.get_clothe_in_store_info(clothe_in_store.id).clothe.handbook.price
+        sum = price * quantity
+        employee = Enum.random(Sales.list_employees_id)
+        current_mag = Sales.get_magazine!(Confex.get_env(:warehouse, :magazine))
+        recepeit = Ecto.Changeset.change(%SalesRecepeit{},
+          magazine_id: current_mag.id,
+          employee_id: employee.id,
+          clothe_in_store_id: clothe_in_store.id,
+          sold_date: curr_date,
+          quantity: quantity,
+          sum: sum,
+          cashbox_num: :rand.uniform(100))
+
+        sales_recepeit = Sales.create_sales!(recepeit)
         conn
-        |> put_flash(:success, "Успешно куплено!")
-        |> redirect(to: Routes.clothe_in_store_path(conn, :show, clothe_in_store))
+            |> put_flash(:success, "Успешно куплено!")
+            |> redirect(to: Routes.sales_recepeit_path(conn, :show, sales_recepeit))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         render(conn, "edit.html", clothe_in_store: clothe_in_store, changeset: changeset)
     end
   end

@@ -47,7 +47,8 @@ defmodule Warehouse.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:confex, "~> 3.5.0"},
       {:guardian, "~> 2.0"},
-      {:bodyguard, "~> 2.4"}
+      {:bodyguard, "~> 2.4"},
+      {:timex, "~> 3.0"}
     ]
   end
 

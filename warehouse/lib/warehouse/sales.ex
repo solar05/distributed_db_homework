@@ -137,7 +137,10 @@ defmodule Warehouse.Sales do
       ** (Ecto.NoResultsError)
 
   """
-  def get_clothe_in_store!(id), do: Repo.get!(ClotheInStore, id)
+  def get_clothe_in_store!(id) do
+    Repo.get!(ClotheInStore, id)
+    |> Repo.preload([:magazine, clothe: [:colour, :size, :handbook]])
+  end
 
   @doc """
   Creates a clothe_in_store.
@@ -170,11 +173,14 @@ defmodule Warehouse.Sales do
 
   """
   def update_clothe_in_store(%ClotheInStore{} = clothe_in_store, attrs) do
-    {quantity, _} =  Integer.parse(Map.get(attrs, "quantity"))
-    diff = clothe_in_store.quantity - quantity
     clothe_in_store
-    |> ClotheInStore.changeset(%{"quantity" => diff})
+    |> ClotheInStore.changeset(%{"quantity" => attrs})
     |> Repo.update()
+  end
+
+  def get_clothe_in_store_info(id) do
+    Repo.get!(ClotheInStore, id)
+    |> Repo.preload([clothe: [:handbook]])
   end
 
   @doc """
@@ -220,6 +226,14 @@ defmodule Warehouse.Sales do
   def list_employee do
     Repo.all(Employee)
     |> Repo.preload([:magazine])
+  end
+
+  def list_employees_id() do
+    current_mag = Confex.get_env(:warehouse, :magazine)
+    result = from employee in Employee,
+     where: employee.magazine_id == ^current_mag,
+     order_by: employee.id
+    Repo.all(result)
   end
 
   @doc """
@@ -695,5 +709,113 @@ defmodule Warehouse.Sales do
   def current_magazine?(mag_id) do
     current_mag = Confex.get_env(:warehouse, :magazine)
     mag_id == current_mag
+  end
+
+  alias Warehouse.Sales.SalesRecepeit
+
+  @doc """
+  Returns the list of sales_recepeit.
+
+  ## Examples
+
+      iex> list_sales_recepeit()
+      [%SalesRecepeit{}, ...]
+
+  """
+  def list_sales_recepeit do
+    current_mag = Confex.get_env(:warehouse, :magazine)
+    result = from sales in SalesRecepeit,
+     where: sales.magazine_id == ^current_mag,
+     order_by: sales.id
+    Repo.all(result)
+  |> Repo.preload([:magazine, :employee,  clothe_in_store: [clothe: [:colour, :size, :handbook]]])
+  end
+
+  @doc """
+  Gets a single sales_recepeit.
+
+  Raises `Ecto.NoResultsError` if the Sales recepeit does not exist.
+
+  ## Examples
+
+      iex> get_sales_recepeit!(123)
+      %SalesRecepeit{}
+
+      iex> get_sales_recepeit!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_sales_recepeit!(id) do
+    Repo.get!(SalesRecepeit, id)
+    |> Repo.preload([:magazine, :employee,  clothe_in_store: [clothe: [:colour, :size, :handbook]]])
+  end
+
+  @doc """
+  Creates a sales_recepeit.
+
+  ## Examples
+
+      iex> create_sales_recepeit(%{field: value})
+      {:ok, %SalesRecepeit{}}
+
+      iex> create_sales_recepeit(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_sales_recepeit(attrs \\ %{}) do
+    %SalesRecepeit{}
+    |> SalesRecepeit.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_sales!(changeset) do
+    Repo.insert!(changeset)
+  end
+
+  @doc """
+  Updates a sales_recepeit.
+
+  ## Examples
+
+      iex> update_sales_recepeit(sales_recepeit, %{field: new_value})
+      {:ok, %SalesRecepeit{}}
+
+      iex> update_sales_recepeit(sales_recepeit, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_sales_recepeit(%SalesRecepeit{} = sales_recepeit, attrs) do
+    sales_recepeit
+    |> SalesRecepeit.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a sales_recepeit.
+
+  ## Examples
+
+      iex> delete_sales_recepeit(sales_recepeit)
+      {:ok, %SalesRecepeit{}}
+
+      iex> delete_sales_recepeit(sales_recepeit)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_sales_recepeit(%SalesRecepeit{} = sales_recepeit) do
+    Repo.delete(sales_recepeit)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking sales_recepeit changes.
+
+  ## Examples
+
+      iex> change_sales_recepeit(sales_recepeit)
+      %Ecto.Changeset{data: %SalesRecepeit{}}
+
+  """
+  def change_sales_recepeit(%SalesRecepeit{} = sales_recepeit, attrs \\ %{}) do
+    SalesRecepeit.changeset(sales_recepeit, attrs)
   end
 end

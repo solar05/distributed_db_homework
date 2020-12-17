@@ -415,4 +415,69 @@ defmodule Warehouse.SalesTest do
       assert %Ecto.Changeset{} = Sales.change_clothe_handbook(clothe_handbook)
     end
   end
+
+  describe "sales_recepeit" do
+    alias Warehouse.Sales.SalesRecepeit
+
+    @valid_attrs %{cashbox_num: 42, quantity: 42, sold_date: ~D[2010-04-17], sum: 42}
+    @update_attrs %{cashbox_num: 43, quantity: 43, sold_date: ~D[2011-05-18], sum: 43}
+    @invalid_attrs %{cashbox_num: nil, quantity: nil, sold_date: nil, sum: nil}
+
+    def sales_recepeit_fixture(attrs \\ %{}) do
+      {:ok, sales_recepeit} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sales.create_sales_recepeit()
+
+      sales_recepeit
+    end
+
+    test "list_sales_recepeit/0 returns all sales_recepeit" do
+      sales_recepeit = sales_recepeit_fixture()
+      assert Sales.list_sales_recepeit() == [sales_recepeit]
+    end
+
+    test "get_sales_recepeit!/1 returns the sales_recepeit with given id" do
+      sales_recepeit = sales_recepeit_fixture()
+      assert Sales.get_sales_recepeit!(sales_recepeit.id) == sales_recepeit
+    end
+
+    test "create_sales_recepeit/1 with valid data creates a sales_recepeit" do
+      assert {:ok, %SalesRecepeit{} = sales_recepeit} = Sales.create_sales_recepeit(@valid_attrs)
+      assert sales_recepeit.cashbox_num == 42
+      assert sales_recepeit.quantity == 42
+      assert sales_recepeit.sold_date == ~D[2010-04-17]
+      assert sales_recepeit.sum == 42
+    end
+
+    test "create_sales_recepeit/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sales.create_sales_recepeit(@invalid_attrs)
+    end
+
+    test "update_sales_recepeit/2 with valid data updates the sales_recepeit" do
+      sales_recepeit = sales_recepeit_fixture()
+      assert {:ok, %SalesRecepeit{} = sales_recepeit} = Sales.update_sales_recepeit(sales_recepeit, @update_attrs)
+      assert sales_recepeit.cashbox_num == 43
+      assert sales_recepeit.quantity == 43
+      assert sales_recepeit.sold_date == ~D[2011-05-18]
+      assert sales_recepeit.sum == 43
+    end
+
+    test "update_sales_recepeit/2 with invalid data returns error changeset" do
+      sales_recepeit = sales_recepeit_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sales.update_sales_recepeit(sales_recepeit, @invalid_attrs)
+      assert sales_recepeit == Sales.get_sales_recepeit!(sales_recepeit.id)
+    end
+
+    test "delete_sales_recepeit/1 deletes the sales_recepeit" do
+      sales_recepeit = sales_recepeit_fixture()
+      assert {:ok, %SalesRecepeit{}} = Sales.delete_sales_recepeit(sales_recepeit)
+      assert_raise Ecto.NoResultsError, fn -> Sales.get_sales_recepeit!(sales_recepeit.id) end
+    end
+
+    test "change_sales_recepeit/1 returns a sales_recepeit changeset" do
+      sales_recepeit = sales_recepeit_fixture()
+      assert %Ecto.Changeset{} = Sales.change_sales_recepeit(sales_recepeit)
+    end
+  end
 end

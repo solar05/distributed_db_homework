@@ -13,7 +13,6 @@ defmodule Warehouse.Sales.ClotheInStore do
     clothe_in_store
     |> cast(attrs, [:quantity])
     |> validate_required([:quantity])
-    |> validate_quantity(clothe_in_store)
   end
 
   defp validate_quantity(changeset, clothe_in_store) do

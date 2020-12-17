@@ -1,0 +1,67 @@
+<h1>Просмотр чека <%= @sales_recepeit.id %> </h1>
+
+<ul class="list-group">
+
+  <li class="list-group-item">
+    <strong>Цена за единицу товара:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.handbook.price %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Количество:</strong>
+    <%= @sales_recepeit.quantity %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Общая сумма покупки:</strong>
+    <%= @sales_recepeit.sum %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Артикул товара:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.handbook.article %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Марка:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.handbook.mark %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Тип:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.handbook.type %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Материал:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.handbook.material %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Размер:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.size.size %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Цвет:</strong>
+    <%= @sales_recepeit.clothe_in_store.clothe.colour.colour %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Продавец:</strong>
+    <%= @sales_recepeit.employee.first_name <> " " <> @sales_recepeit.employee.last_name %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Дата продажи:</strong>
+    <%= @sales_recepeit.sold_date %>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Номер кассового аппарата:</strong>
+    <%= @sales_recepeit.cashbox_num %>
+  </li>
+
+</ul>
+<br>
+<span><%= link "К списку чеков", to: Routes.sales_recepeit_path(@conn, :index), class: "btn btn-primary" %></span>

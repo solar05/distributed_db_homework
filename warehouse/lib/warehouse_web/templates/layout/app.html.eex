@@ -15,6 +15,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <ul class="navbar-nav mr-auto">
                   <%= link("Покупка одежды", to: Routes.clothe_in_store_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                  <%= link("Чеки", to: Routes.sales_recepeit_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
                   <%= if logged?(@conn) do %>
                     <%= link("Магазины", to: Routes.magazine_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
                     <%= link("Сотрудники", to: Routes.employee_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
@@ -41,7 +42,7 @@
             </nav>
     </header>
 
-    <main role="main" class="container">
+    <div class="container">
     <%= if get_flash(@conn, :success) do %>
       <p class="alert alert-success" role="alert"><%= get_flash(@conn, :success) %></p>
     <% end %>
@@ -52,6 +53,6 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
     <% end %>
       <%= @inner_content %>
-    </main>
+    </div>
   </body>
 </html>
