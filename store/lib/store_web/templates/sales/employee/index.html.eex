@@ -1,0 +1,44 @@
+<h3>Список сотрудников</h1>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th>Дата рождения</th>
+      <th>Дата наема</th>
+      <th>Номер паспорта</th>
+      <th>Номер телефона</th>
+      <th>Должность</th>
+      <th>Зарплата</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for employee <- @employee do %>
+  <%= if current_magazine?(employee.magazine.id) do %>
+    <tr class="bg-success text-white">
+        <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.birth_date %></td>
+        <td><%= employee.hire_date %></td>
+        <td><%= employee.passport_number %></td>
+        <td><%= employee.phone_number %></td>
+        <td><%= employee.position.position_name %></td>
+        <td><%= employee.position.position_salary %></td>
+      </tr>
+  <% else %>
+      <tr>
+        <td><%= employee.first_name %></td>
+        <td><%= employee.last_name %></td>
+        <td><%= employee.birth_date %></td>
+        <td><%= employee.hire_date %></td>
+        <td><%= employee.passport_number %></td>
+        <td><%= employee.phone_number %></td>
+        <td><%= employee.position.position_name %></td>
+        <td><%= employee.position.position_salary %></td>
+      </tr>
+  <% end %>
+<% end %>
+  </tbody>
+</table>

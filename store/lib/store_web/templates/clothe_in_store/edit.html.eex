@@ -1,0 +1,4 @@
+<h2>Купить одежду <%= @clothe_in_store.clothe.handbook.article %> <%= @clothe_in_store.clothe.handbook.type %> <%= @clothe_in_store.clothe.handbook.mark %></h1>
+<%= render "form.html", Map.put(assigns, :action, Routes.clothe_in_store_path(@conn, :update, @clothe_in_store)) %>
+
+<span><%= link "К списку одежды", to: Routes.clothe_in_store_path(@conn, :index), class: "btn btn-primary" %></span>

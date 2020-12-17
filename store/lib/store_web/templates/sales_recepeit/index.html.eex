@@ -1,0 +1,33 @@
+<h3>Список чеков</h3>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Продавец</th>
+      <th>Артикул</th>
+      <th>Материал</th>
+      <th>Марка</th>
+      <th>Сумма</th>
+      <th>Дата продажи</th>
+      <th>Номер кассы</th>
+      <th>Количество</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for sales_recepeit <- @sales_recepeit do %>
+    <tr>
+        <td><%= sales_recepeit.employee.first_name <> " " <> sales_recepeit.employee.last_name %> </td>
+        <td><%= sales_recepeit.clothe_in_store.clothe.handbook.article %></td>
+        <td><%= sales_recepeit.clothe_in_store.clothe.handbook.material %></td>
+        <td><%= sales_recepeit.clothe_in_store.clothe.handbook.mark %></td>
+        <td><%= sales_recepeit.sum %></td>
+        <td><%= sales_recepeit.sold_date %></td>
+        <td><%= sales_recepeit.cashbox_num %></td>
+        <td><%= sales_recepeit.quantity %></td>
+        <td><span><%= link "Подробнее", to: Routes.sales_recepeit_path(@conn, :show, sales_recepeit) %></span></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

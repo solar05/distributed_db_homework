@@ -1,0 +1,5 @@
+<h1>Edit Magazine</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.sales_magazine_path(@conn, :update, @magazine)) %>
+
+<span><%= link "Back", to: Routes.sales_magazine_path(@conn, :index) %></span>

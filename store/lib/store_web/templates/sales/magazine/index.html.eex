@@ -1,0 +1,38 @@
+<h3>Магазины</h3>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Номер магазина</th>
+      <th>Город</th>
+      <th>Улица</th>
+      <th>Дом</th>
+      <th>ИНН</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for magazine <- @magazine do %>
+
+      <%= if current_magazine?(magazine.id) do %>
+      <tr class="bg-success text-white">
+        <td><%= magazine.id %></td>
+        <td><%= magazine.city %></td>
+        <td><%= magazine.street %></td>
+        <td><%= magazine.house %></td>
+        <td><%= magazine.inn %></td>
+      </tr>
+      <% else %>
+      <tr>
+        <td><%= magazine.id %></td>
+        <td><%= magazine.city %></td>
+        <td><%= magazine.street %></td>
+        <td><%= magazine.house %></td>
+        <td><%= magazine.inn %></td>
+      </tr>
+      <% end %>
+
+
+<% end %>
+  </tbody>
+</table>

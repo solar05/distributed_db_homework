@@ -4,30 +4,55 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Store · Phoenix Framework</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
+      <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav mr-auto">
+                  <%= link("Покупка одежды", to: Routes.clothe_in_store_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                  <%= link("Чеки", to: Routes.sales_recepeit_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                  <%= if logged?(@conn) do %>
+                    <%= link("Сотрудники", to: Routes.employee_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                    <%= link("Заказы одежды", to: Routes.clothe_order_path(@conn, :index), class: "navbar-brand navbar-text text-dark h1") %>
+                  <% end %>
+                </ul>
+                <span class="navbar-text">
+                    <%= if logged?(@conn) do %>
+                    <h2 class="text-dark">
+                      Добро пожаловать, <%= current_user(@conn).first_name %>!
+                    </h2>
+                    <h2>
+                      <%= link(
+                        "Выйти",
+                        to: Routes.session_path(@conn, :delete),
+                        method: :delete)
+                      %>
+                    </h2>
+                  <% else %>
+                    <h2>
+                      <%= link("Войти", to: Routes.session_path(@conn, :create)) %>
+                    </h2>
+                  <% end %>
+                </span>
+            </nav>
     </header>
-    <main role="main" class="container">
+
+    <div class="container">
+    <%= if get_flash(@conn, :success) do %>
+      <p class="alert alert-success" role="alert"><%= get_flash(@conn, :success) %></p>
+    <% end %>
+    <%= if get_flash(@conn, :info) do %>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <% end %>
+    <%= if get_flash(@conn, :error) do %>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <% end %>
       <%= @inner_content %>
-    </main>
+    </div>
   </body>
 </html>

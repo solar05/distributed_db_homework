@@ -9,14 +9,37 @@ defmodule StoreWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :guardian do
+    plug StoreWeb.Authentication.Pipeline
+  end
+
+  pipeline :browser_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", StoreWeb do
-    pipe_through :browser
+    pipe_through [:browser, :guardian]
 
     get "/", PageController, :index
+    resources "/clothes", ClotheInStoreController
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
+    resources "/checks", SalesRecepeitController, only: [:index, :show]
+  end
+
+  scope "/admin", StoreWeb.Sales do
+    pipe_through [:browser, :guardian, :browser_auth]
+    resources "/employee", EmployeeController, only: [:index]
+  end
+
+  scope "/admin", StoreWeb do
+    pipe_through [:browser, :guardian, :browser_auth]
+    resources "/orders", ClotheOrderController
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,18 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Неправильное число покупаемой одежды.</p>
+    </div>
+  <% end %>
+  <div class="text-xl-left font-weight-bold">Цена: <%= @clothe_in_store.clothe.handbook.price %>.</div>
+  <div class="text-xl-left font-weight-bold">В наличии: <%= @clothe_in_store.quantity %>.</div>
+  <div class="form-group">
+    <label for="clothe_in_store_quantity">
+      Количество <%= number_input f, :quantity, class: "form-control", value: 0 %>
+    </label>
+
+    <%= error_tag f, :quantity %>
+    <%= submit "Купить", class: "btn btn-success" %>
+  </div>
+
+<% end %>
