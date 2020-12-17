@@ -4,38 +4,6 @@ defmodule WarehouseWeb.Api.ClotheOrderController do
   alias Warehouse.Sales
   alias Warehouse.Sales.ClotheOrder
 
-  #def new(conn, %{"id" => id}) do
-    #clothe_order = Sales.get_clothe_order!(id)
-    #case Sales.update_clothe_order(clothe_order, %{"state" => "ordered"}) do
-    #  {:ok, clothe_order} ->
-   #     conn
-  #      |> put_flash(:success, "Заказ подтвержден!")
- #       |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-#
-  #    {:error, %Ecto.Changeset{} = changeset} ->
-  #      IO.inspect(changeset)
-  #      conn
-  #      |> put_flash(:error, "Произошла ошибка!")
-  #      |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-  #  end
-  #end
-
-  #def create(conn, %{"id" => id}) do
-    #clothe_order = Sales.get_clothe_order!(id)
-    #case Sales.update_clothe_order(clothe_order, %{"state" => "ordered"}) do
-    #  {:ok, clothe_order} ->
-   #     conn
-  #      |> put_flash(:success, "Заказ подтвержден!")
- #       |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-#
-  #    {:error, %Ecto.Changeset{} = changeset} ->
-  #      IO.inspect(changeset)
-  #      conn
-  #      |> put_flash(:error, "Произошла ошибка!")
-  #      |> redirect(to: Routes.clothe_order_path(conn, :show, clothe_order))
-  #  end
-  #end
-
   def order(conn, %{"id" => magazine_id, "clothe" => clothe_id, "employee" => employee_id}) do
     {{year, month, date}, _} = :calendar.local_time
     curr_date = Date.from_iso8601!("#{year}-#{month}-#{date}")

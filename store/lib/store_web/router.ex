@@ -21,6 +21,11 @@ defmodule StoreWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", StoreWeb.Api, as: :api do
+    pipe_through :api
+    get "/orders/:id/:clothe/:employee", ClotheOrderController, :order
+  end
+
   scope "/", StoreWeb do
     pipe_through [:browser, :guardian]
 

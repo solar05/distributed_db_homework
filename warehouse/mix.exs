@@ -48,7 +48,8 @@ defmodule Warehouse.MixProject do
       {:confex, "~> 3.5.0"},
       {:guardian, "~> 2.0"},
       {:bodyguard, "~> 2.4"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:httpoison, "~> 1.7"}
     ]
   end
 

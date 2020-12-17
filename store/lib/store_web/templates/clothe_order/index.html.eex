@@ -18,8 +18,9 @@
   <tbody>
 <%= for clothe_order <- @clothe_order do %>
     <tr>
+    
       <td><%= clothe_order.id %>
-      <td><%= clothe_order.magazine.id %>
+      <td><%= clothe_order.magazine.id %></td>
       <td><%= clothe_order.employee.first_name <> " " <> clothe_order.employee.last_name %></td>
       <td><%= clothe_order.clothe.handbook.article %></td>
       <td><%= clothe_order.order_date %></td>

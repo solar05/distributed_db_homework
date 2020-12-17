@@ -880,6 +880,16 @@ defmodule Store.Sales do
     |> Repo.preload([:magazine, :employee, clothe: [:colour, :size, :handbook]])
   end
 
+  def get_clothe_order!(clothe_id, employee_id, magazine_id) do
+    query = from orders in ClotheOrder,
+    where: orders.magazine_id == ^magazine_id
+    and orders.state == "ordered" and orders.clothe_id == ^clothe_id
+    and orders.employee_id == ^employee_id,
+    limit: 1
+    Repo.all(query)
+    |> List.first()
+  end
+
   def clothe_orders_exists?(clothe_id) do
     current_mag = Confex.get_env(:store, :magazine)
     result = from orders in ClotheOrder,

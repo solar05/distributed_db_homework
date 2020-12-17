@@ -56,6 +56,12 @@ defmodule WarehouseWeb.ClotheOrderController do
         current_mag = Confex.get_env(:warehouse, :magazine)
         if (current_mag == clothe_order.magazine_id) do
           Sales.refill_clothe_in_store(clothe_order.clothe_id, clothe_order.quantity)
+        else
+          base_url = "localhost:4000/api/orders"
+          clothe = clothe_order.clothe_id
+          employee = clothe_order.employee_id
+          mag = clothe_order.magazine_id
+          IO.inspect(HTTPoison.get("#{base_url}/#{mag}/#{clothe}/#{employee}"))
         end
 
         conn
